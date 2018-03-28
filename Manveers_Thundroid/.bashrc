@@ -26,9 +26,9 @@ SYMBOL="\342\202\277" # UTF-8 octal code for BTC symbol (U+20BF)
 
 # Pimp prompt (leave only one PS1 line uncommented)
 # ADMIN user
-PS1="${DARK_GRAY}\t ${debian_chroot:+($debian_chroot)}${RED}${BOLD}\u ${BLUE}\w ${YELLOW}${SYMBOL} ${RESET}"
+PS1="${DARK_GRAY}\t ${debian_chroot:+($debian_chroot)}${BOLD}${RED}\u ${BOLD}${BLUE}\w ${RESET}${YELLOW}${SYMBOL} ${RESET}"
 # BITCOIN user
-# PS1="${DARK_GRAY}\t ${debian_chroot:+($debian_chroot)}${YELLOW}${BOLD}\u ${BLUE}\w ${YELLOW}${SYMBOL} ${RESET}"
+# PS1="${DARK_GRAY}\t ${debian_chroot:+($debian_chroot)}${BOLD}${YELLOW}\u ${BOLD}${BLUE}\w ${RESET}${YELLOW}${SYMBOL} ${RESET}"
 # debian default
 # PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 
