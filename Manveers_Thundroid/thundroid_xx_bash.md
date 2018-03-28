@@ -1,9 +1,8 @@
 --------
-### Manveer's Annotated :zap: Thundroid :zap: Guide
+### Manveer's Annotated :zap:Thundroid:zap: Guide
 --------
 # Bash
-Since you'll be working on your Thundroid entirely via the shell prompt, it's worth decorating it a bit and installing some shortcuts.<br/>
-Note: Run all of the following commands as *admin* user.
+Since you'll be working on your Thundroid entirely via the shell prompt, it's worth decorating it a bit and installing some shortcuts. Note: Run all of the following commands as *admin* user.
 
 ## Prettifying your Shell Prompt (optional)
 You can redesign your shell prompt for each user by enabling color output and setting a custom prompt.<br/>
@@ -29,10 +28,10 @@ LIGHT_GRAY="\[\e[37m\]"
 # Variables: Other
 RESET="\[\e[0m\]"
 BOLD="\[\e[1m\]"
-SYMBOL="\342\202\277" # UTF-8 octal code for BTC symbol
-# note: If locales aren’t properly set on your Ubuntu operating system, 
-# then the Bitcoin symbol will not properly display in .bashrc, 
-# and your shell prompt will have wrapping issues
+SYMBOL="\342\202\277" # UTF-8 octal code for BTC symbol (U+20BF)
+# note: If locale isn't properly set on your Ubuntu operating system, 
+# then the Bitcoin symbol will not properly display in the nano editor for .bashrc, 
+# and your shell prompt will have wrapping issues.
 
 # Escape sequences (guide for newbies)
 #  \[...\] = non-printable sequences should be wrapped in this
@@ -79,18 +78,10 @@ LIGHT_GRAY="\[\e[37m\]"
 # Variables: Other
 RESET="\[\e[0m\]"
 BOLD="\[\e[1m\]"
-SYMBOL="\342\202\277" # UTF-8 octal code for BTC symbol
-# note: If locales aren’t properly set on your Ubuntu operating system, 
-# then the Bitcoin symbol will not properly display in .bashrc, 
-# and your shell prompt will have wrapping issues
-
-# Escape sequences (guide for newbies)
-#  \[...\] = non-printable sequences should be wrapped in this
-#  \e = \033 = escape character
-#  \t = time
-#  \u = username
-#  \w = current directory
-#  \n = new line
+SYMBOL="\342\202\277" # UTF-8 octal code for BTC symbol (U+20BF)
+# note: If locale isn't properly set on your Ubuntu operating system, 
+# then the Bitcoin symbol will not properly display in the nano editor for .bashrc, 
+# and your shell prompt will have wrapping issues.
 
 # Pimp prompt (leave only one PS1 line uncommented)
 # ADMIN user
@@ -118,7 +109,6 @@ If locale is not properly set on your Ubuntu operating system, then the Bitcoin 
 There's a chance that no locales are set on your system. This can be recognized by the fact that **/etc/default/locale** does not exist. Furthermore, the `locale -a` command returns the following:
 
 ```
- locale -a
  C
  C.UTF-8
  POSIX
@@ -129,12 +119,17 @@ To fix this, proceed as follows:
 * Generate locale.<br/>
   `sudo locale-gen en_US.UTF-8`
 
-* Set locale. This generates also the /etc/default/locale file.<br/>
+* Set locale.<br/>
   `sudo dpkg-reconfigure locales`
+
+* Generate the */etc/default/locale* file.<br/>
   `sudo update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8`
 
 * Restart the system, or open a new terminal.<br/>
   `sudo shutdown -r now`
+
+* Confirm that your chosen locales are successfully installed.<br/>
+  `locale -a`
 
 
 ## Bash Completion (optional)
@@ -151,10 +146,10 @@ As user *admin*:
 * Download completion script for lnd (Lightning Labs).<br/>
   `wget https://raw.githubusercontent.com/lightningnetwork/lnd/master/contrib/lncli.bash-completion`
 
-* Copy bash-completion files from /downloads/ directory to /etc/ directory where they will be used.<br/>
+* Copy bash-completion files from **/downloads/** directory to **/etc/bash_completion.d/** directory where they will be used.<br/>
   `sudo cp *.bash-completion /etc/bash_completion.d/`
 
-Note: there are three implementations of Lightning: eclair (ACINQ), c-lightning (Blockstream), and lnd (Lightning Labs). For our Thundroid, we only installed lnd. But if you ever choose to switch to one of the other implementations, you can find their bash completion scripts here:
+Note: there are three implementations of Lightning: **eclair** (ACINQ), **c-lightning** (Blockstream), and **lnd** (Lightning Labs). For our Thundroid, we only installed **lnd**. But if you ever choose to switch to one of the other implementations, you can find their bash completion scripts here:
 
 ```
 # Download completion script for eclair (ACINQ)
@@ -164,4 +159,4 @@ wget https://raw.githubusercontent.com/ACINQ/eclair/master/contrib/eclair-cli.ba
 wget https://raw.githubusercontent.com/ElementsProject/lightning/master/contrib/lightning-cli.bash-completion
 ```
 
-If you download these other completion scripts later, remember to also copy them to the /etc/ directory!
+If you download these other completion scripts later, remember to also copy them to the **/etc/bash_completion.d/** directory!

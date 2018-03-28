@@ -11,10 +11,10 @@ LIGHT_GRAY="\[\e[37m\]"
 # Variables: Other
 RESET="\[\e[0m\]"
 BOLD="\[\e[1m\]"
-SYMBOL="\342\202\277" # UTF-8 octal code for BTC symbol
-# note: If locales aren’t properly set on your Ubuntu operating system, 
-# then the Bitcoin symbol will not properly display in .bashrc, 
-# and your shell prompt will have wrapping issues
+SYMBOL="\342\202\277" # UTF-8 octal code for BTC symbol (U+20BF)
+# note: If locale isn't properly set on your Ubuntu operating system, 
+# then the Bitcoin symbol will not properly display in the nano editor for .bashrc, 
+# and your shell prompt will have wrapping issues.
 
 # Escape sequences (guide for newbies)
 #  \[...\] = non-printable sequences should be wrapped in this
