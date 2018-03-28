@@ -165,29 +165,29 @@ If you download these other completion scripts later, remember to also copy them
 
 
 ## System Overview MOTD (optional)
-MOTD = Message Of The Day. When users login to their shell account on a Linux-based OS (like Ubuntu), MOTD is what they are greeted by.
+MOTD = Message Of The Day. When users login to their shell account on a Linux-based OS (like Ubuntu), MOTD is what they are greeted by. We are going to change the default Ubuntu MOTD to a new MOTD tailored specifically for our Bitcoin/LND node. This new MOTD will give a quick overview of our system's status.
 
-We are going to change the default Ubuntu MOTD to a new MOTD tailored specifically for our Bitcoin/LND node. This new MOTD will give a quick overview of our system's status.
+![System Overview MOTD - Dark](https://cdn-images-1.medium.com/max/1600/1*wcpy-a2Nbe92dY6ROWm3Yg.png)
 
-* As user *admin*, go into the **downloads** directory.
+* As user *admin*, go into the **downloads** directory.<br/>
   `cd /home/admin/downloads/`
 
-* Download Stadicus' system overview MOTD script.
+* Download Stadicus' system overview MOTD script.<br/>
   `wget https://gist.githubusercontent.com/Stadicus/ffbbd855d23cd068f7b739cae6440f4b/raw/ab2c97bd554c003b88f5e9a8793a047805d5e4b0/20-thundroid-welcome`
 
-* Check script & exit. This script will run as root, so please check it before blindly trusting it!
+* Check script & exit. This script will run as root, so please check it before blindly trusting it!<br/>
   `nano 20-thundroid-welcome`
 
-* Delete all existing MOTD scripts. 
+* Delete all existing MOTD scripts.<br/>
   `sudo rm /etc/update-motd.d/*`
 
-* Copy the Stadicus' MOTD script into your system's MOTD directory.
+* Copy the Stadicus' MOTD script into your system's MOTD directory.<br/>
   `sudo cp 20-thundroid-welcome /etc/update-motd.d/`
 
-* Change the script's file permissions so that it can be executed (that's what the 'x' means).
+* Change the script's file permissions so that it can be executed (that's what the 'x' means).<br/>
   `sudo chmod +x /etc/update-motd.d/20-thundroid-welcome`
 
-* Make link
+* Make link.<br/>
   `sudo ln -s /etc/update-motd.d/20-thundroid-welcome /usr/local/bin/thundroid`
 
 Now logout of your Thundroid (Ctrl+D) and log back in again to make sure the new MOTD is working. Below are two useful commands to edit/run the MOTD as needed:
