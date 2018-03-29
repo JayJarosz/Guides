@@ -25,16 +25,17 @@ Now depending on whether you're planning to use a 3.5" HDD or a 2.5" HDD/SSD, yo
 If using a 2.5" HDD or SSD | If using a 3.5" HDD
 ------------ | -------------
 [Hardkernel's Odroid-HC1 (Home Cloud One)](http://www.hardkernel.com/main/products/prdt_info.php?g_code=G150229074080) | [Hardkernel's Odroid-HC2 (Home Cloud Two)](http://www.hardkernel.com/main/products/prdt_info.php?g_code=G151505170472)
-[5V/6A power supply](http://www.hardkernel.com/main/products/prdt_info.php?g_code=G146977556615)<br/>(the 5V/4A power supply is not enough to power external HDD/SSD) | [12V/12A power supply](http://www.hardkernel.com/main/products/prdt_info.php?g_code=G151578376044)
+[5V/**6**A power supply](http://www.hardkernel.com/main/products/prdt_info.php?g_code=G146977556615)<br/>(5V/4A is not enough to power an external HDD/SSD) | [12V/12A power supply](http://www.hardkernel.com/main/products/prdt_info.php?g_code=G151578376044)
 ![Odroid-HC1](images/odroid-hc1.jpg) | ![Odroid-HC2](images/odroid-hc2.jpg)
 optional: [Odroid-HC1 case](http://www.hardkernel.com/main/products/prdt_info.php?g_code=G150878897712) | optional: [Odroid-HC2 case](http://www.hardkernel.com/main/products/prdt_info.php?g_code=G151596669222)
 
-Note: If you're planning to keep your Thundroid in your bedroom, get the solid/dark case (if it's available) because the Odroid circuit has a very bright blue blinking LED that will light up your ceiling. You might also want to invest in some stickers to cover the top of the case.
+I love the case because it's a great way to prevent your Thundroid from getting dusty and it's nice to decorate it. Also, if you're planning to keep your Thundroid in your bedroom, get the solid/dark case (if it's available) because the Odroid motherboard has a very bright blue blinking LED that will light up your ceiling. Or you can just disable the LED by reprogramming some settings (see next section).
 
 ![Odroid-HC2 Cases](images/odroid-hc2-cases.jpg)
 
 
 ### Bonus: Bitcoin stickers
+You might also want to invest in some stickers to cover the top of the case and block out the blinking LED -- or just to prettify your hardware :)
 
 * [Blockstream's I Got Lightning Working](https://store.blockstream.com/product/lightning-sticker/)
 * [PartyBrew's Bitcoin Moon](https://www.etsy.com/in-en/listing/582859688/bitcoin-moon-sticker-space-seal-sticker)
