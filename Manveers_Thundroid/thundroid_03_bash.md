@@ -1,3 +1,5 @@
+[ [Intro](README.md) ] -- [ [Hardware](thundroid_01_hardware.md) ] -- [ [Odroid](thundroid_02_odroid.md) ] -- [ **Bash** ] -- [ [Bitcoin](thundroid_04_bitcoin.md) ] -- [ [Lightning](thundroid_05_lnd.md) ] -- [ [Tor](thundroid_06_tor.md) ] -- [ [Web Interface](thundroid_07_webinterface.md) ]
+
 --------
 ### Manveer's Annotated :zap:Thundroid:zap: Guide
 --------
@@ -190,7 +192,9 @@ MOTD = Message Of The Day. When users login to their shell account on a Linux-ba
 * Make link.<br/>
   `sudo ln -s /etc/update-motd.d/20-thundroid-welcome /usr/local/bin/thundroid`
 
-Now logout of your Thundroid (Ctrl+D) and log back in again to make sure the new MOTD is working. Below are two useful commands to edit/run the MOTD as needed:
+* Now logout of your Thundroid (Ctrl+D) and log back in again to make sure the new MOTD is working. 
+
+Below are two useful commands to edit/run the MOTD as needed:
 
 ```
 # To edit the system overview MOTD
