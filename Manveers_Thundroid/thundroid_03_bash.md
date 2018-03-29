@@ -169,7 +169,7 @@ If you download these other completion scripts later, remember to also copy them
 ## System Overview MOTD (optional)
 MOTD = Message Of The Day. When users login to their shell account on a Linux-based OS (like Ubuntu), MOTD is what they are greeted by. We are going to change the default Ubuntu MOTD to a new MOTD tailored specifically for our Bitcoin/LND node. This new MOTD will give a quick overview of our system's status.
 
-![System Overview MOTD - Dark](https://cdn-images-1.medium.com/max/1600/1*wcpy-a2Nbe92dY6ROWm3Yg.png)
+![System Overview MOTD - Dark](images/system-overview-motd-black.png)
 
 * As user *admin*, go into the **downloads** directory.<br/>
   `cd /home/admin/downloads/`

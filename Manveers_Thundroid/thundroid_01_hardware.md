@@ -33,9 +33,8 @@ I love the case because it's a great way to prevent your Thundroid from getting 
 
 ![Odroid-HC2 Cases](images/odroid-hc2-cases.jpg)
 
-
 ### Bonus: Bitcoin stickers
-You might also want to invest in some stickers to cover the top of the case and block out the blinking LED -- or just to prettify your hardware :)
+You might also want to invest in some stickers to cover the top of the case and block out the blinking LED – or just to prettify your hardware :)
 
 * [Blockstream's I Got Lightning Working](https://store.blockstream.com/product/lightning-sticker/)
 * [PartyBrew's Bitcoin Moon](https://www.etsy.com/in-en/listing/582859688/bitcoin-moon-sticker-space-seal-sticker)
@@ -60,3 +59,10 @@ You might also want to invest in some stickers to cover the top of the case and 
 * The initial boot can take several minutes. SSH is on by default.
 
 !! Caution: If you ever want to take off the smaller half of the plastic case, be sure to first unplug the cables and remove the SD card. If you take off the plastic case with the SD card still inserted, the SD card might break.
+
+
+# Switching MicroSD Cards
+
+Later on you, once you already have your Thundroid fully set up and running, you might want/need to upgrade your MicroSD card. To do this: ...
+
+TO DO 
