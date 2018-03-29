@@ -22,3 +22,7 @@ So with that in mind, I created my own guide. At first it was private and for my
 ## Contact
 
 If you have any questions or feedback about this guide, you can message me on [earn.com](https://earn.com/manveer/referral/?a=q2zsrtda8fkd8adl) or on [ProtonMail](mailto:manveer.jarosz@pm.me).
+
+If you found this guide helpful, please consider donating some coins.
+
+BTC: 3LtfxvMXcaEEFtnshdEcUY15BfRvtzVNbA
