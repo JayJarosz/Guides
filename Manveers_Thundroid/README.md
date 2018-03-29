@@ -4,7 +4,9 @@
 ### Manveer's Annotated :zap:Thundroid:zap: Guide
 --------
 
-I've been telling myself for over a year that I'll set up a Bitcoin node, but I would always procrastinate. That's until I saw Stadicus' article on Medium: ["The perfect Bitcoin ⚡Lightning⚡ node"](https://medium.com/@stadicus/perfect-low-cost-%EF%B8%8Flightning%EF%B8%8F-node-4c2f42a4ff7b). The photo of his Thundroid was oddly tantalizing, and the next thing I knew I was ordering an Odroid from South Korea. 
+I've been telling myself for over a year that I'll set up a Bitcoin node, but I would always procrastinate. I don't have enough space left on my MacBook Pro, and the commonly and cheaply available RaspberryPi has several performance issues.
+
+Then one day I saw Stadicus' article on Medium: ["The perfect Bitcoin Lightning node"](https://medium.com/@stadicus/perfect-low-cost-%EF%B8%8Flightning%EF%B8%8F-node-4c2f42a4ff7b). The photo of his Thundroid was oddly tantalizing, and I loved his choice of Odroid over RaspberryPi. The next thing I knew I was ordering an Odroid kit from South Korea. 
 
 While Stadicus' guide was a great starting point, 
 
@@ -16,4 +18,6 @@ While Stadicus' guide was a great starting point,
 * I wanted to make tweaks to Stadicus' customizations (especially in Bash).
 * I wanted to jump into bonus stuff like Tor and a web interface.
 
-So with that in mind, I created my own guide. At first it was private and for my own use. I used it kind of like a journal of sorts to try to better understand what I was doing in Stadicus' guide, to document issues I ran into (and the solutions that worked), and to keep track of the tweaks I made. I later realized that this could be useful for other newbies to see, so I polished it up a bit and made it public.
+So with that in mind, I created my own guide. At first it was private and for my own use. I used it kind of like a journal of sorts to try to better understand what I was doing in Stadicus' guide, to document issues I ran into (and the solutions that worked), and to keep track of the tweaks I made. I later realized that this could be useful for other newbies to have access to, so I polished it up a bit and made it public.
+
+Enjoy :)

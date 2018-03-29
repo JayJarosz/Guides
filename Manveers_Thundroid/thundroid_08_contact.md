@@ -7,6 +7,6 @@
 
 If you have any questions or feedback about this guide, you can message me on [earn.com](https://earn.com/manveer/referral/?a=q2zsrtda8fkd8adl) or on [ProtonMail](mailto:manveer.jarosz@pm.me).
 
-If you found this guide helpful, please consider donating some coins.
+If you found this guide helpful, please consider donating some satoshis :)
 
 BTC: 3LtfxvMXcaEEFtnshdEcUY15BfRvtzVNbA
