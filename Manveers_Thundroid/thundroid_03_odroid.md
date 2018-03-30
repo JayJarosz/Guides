@@ -42,7 +42,7 @@ I've taken a middle approach: passwords in LastPass, and wallet seed on paper (s
 
 ### Time Zone & Localization
 
-* Set time zone.
+* Set time zone.<br/>
   `dpkg-reconfigure tzdata`
 * Generate locale.<br/>
   `locale-gen en_US.UTF-8`
@@ -68,7 +68,7 @@ I've taken a middle approach: passwords in LastPass, and wallet seed on paper (s
   * `apt dist-upgrade` will install or remove packages as necessary to complete the upgrade.
 * Install **linux-image-xu3**.<br/>
   `apt install linux-image-xu3`
-* Answer [y], then [no] (do not abort).
+  * Answer [y], then [no] (do not abort).
 * If you see errors like the ones below, it means that your locale configuration wasn't done properly.
 
 ```
@@ -90,7 +90,8 @@ perl: warning: Falling back to the standard locale ("C").
 * Using Nano text editor, open these two host files and change the hostname in each (replace "odroid" with “thundroid”).<br/>
   `nano /etc/hostname`
   `nano /etc/hosts`
-  * Commands: Ctrl-O = confirm or change filename & press enter, Ctrl-X = Exit.
+  * Use Ctrl+O to confirm or change filename (& press enter).
+  * Use Ctrl+X to Exit.
 
 ### User Management
 For the initial configuration we're logged in as *root* user. In the future, we'll only be logging in as *admin* user. As *admin*, you'll need to add "sudo" before important commands (like the ones above) for them to work.
@@ -116,7 +117,7 @@ For the initial configuration we're logged in as *root* user. In the future, we'
   `lsblk -o UUID,NAME,FSTYPE,SIZE,LABEL,MODEL`
 * Open fstab file in Nano editor .<br/>
   `nano /etc/fstab`
-  * Paste this line to the end of fstab (be sure to replace the UUID with your own).<br/>
+  * Paste this line at the end of fstab (be sure to replace the UUID with your own).<br/>
     `UUID=b27dbaa1-6809-45d1-89dd-e3b700b46074 /mnt/hdd ext4 noexec,defaults 0 0`
 * Create mount point for the SSD/HDD.<br/>
   `mkdir /mnt/hdd`
@@ -163,19 +164,19 @@ We will configure our firewall to deny all connection attempts from other peers 
 * Add rules for UFW to follow.<br/>
   `ufw default deny incoming`<br/>
   `ufw default allow outgoing`<br/>
-  `ufw allow from 192.168.0.0/24 to any port 22 comment 'allow SSH from local LAN'`<br/>
+  `ufw allow from 192.168.0.0/24 to any port 22 comment 'allow SSH from local LAN'`
   * Assuming the IP address of your Pi is something like 192.168.0.xxx (the xxx being any number from 0 to 255). 
   * If your IP address is different, like 12.34.56.xxx, you must modify this line to `ufw allow from 12.34.56.0/24`.
   * Note: the number before `/24` must be 0, regardless of your IP address!
 
   `ufw allow 8333 comment 'allow Bitcoin mainnet'`<br/>
   `ufw allow 18333 comment 'allow Bitcoin testnet'`<br/>
-  `ufw allow 9735 comment 'allow Lightning'`<br/>
+  `ufw allow 9735 comment 'allow Lightning'`
 
 * If you're planning to use your Thundroid as a Tor Middle Relay, add this extra rule:<br/>
   `ufw allow 9001 comment 'allow ORPort (Tor Middle Relay)'`
 * Enable UFW.<br/>
-  `ufw enable`
+  `ufw enable`<br/>
   `systemctl enable ufw`
 * Check to see if all the rules were recorded correctly.<br/>
   `ufw status`
@@ -218,15 +219,15 @@ On your Thundroid:
   * Change PasswordAuthentication to "no"
   * Save & Exit
 * Copy the SSH public key to *root* user, just in case.<br/>
-  `sudo mkdir /root/.ssh`
-  `sudo cp /home/admin/.ssh/authorized_keys /root/.ssh/`
-  `sudo chown -R root:root /root/.ssh/`
-  `sudo chmod -R 700 /root/.ssh/`
+  `sudo mkdir /root/.ssh`<br/>
+  `sudo cp /home/admin/.ssh/authorized_keys /root/.ssh/`<br/>
+  `sudo chown -R root:root /root/.ssh/`<br/>
+  `sudo chmod -R 700 /root/.ssh/`<br/>
   `sudo systemctl restart sshd.service`
 * Exit and login again.
 * You should now only be able to login with *admin* or *root* and your SSH key. 
 * Try to login without your SSH key to make sure it's working properly.
 
-⚠️ Backup your SSH key from your Mac! Copy it onto a USB and lock it in a safe. There is no fallback login if you lose your SSH key!
+⚠️ Backup your SSH key from your Mac -- copy it onto a USB and lock it in a safe. There is no fallback login if you lose your SSH key!
 
 Worst case scenario: you'll need to flash the MicroSD card and set up the system again. But luckily all important stuff is on the HDD/SSD and won't be affected :)
