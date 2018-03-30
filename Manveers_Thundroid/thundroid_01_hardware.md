@@ -161,11 +161,3 @@ To do this, you'll need to backup an image of your current MicroSD card and then
   `dh -f`
 
 ![dh-f After](images/dh-f-after.png)
-
-
-
-
-
-
-
-

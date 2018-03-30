@@ -68,7 +68,7 @@ I've taken a middle approach: passwords in LastPass, and wallet seed on paper (s
   * `apt dist-upgrade` will install or remove packages as necessary to complete the upgrade.
 * Install **linux-image-xu3**.<br/>
   `apt install linux-image-xu3`
-  * Answer [y], then [no] (do not abort).
+* Answer [y], then [no] (do not abort).
 * If you see errors like the ones below, it means that your locale configuration wasn't done properly.
 
 ```
@@ -190,8 +190,8 @@ On your Mac:
 
 * Create a RSA key pair.<br/>
   `ssh-keygen -t rsa`
-  * "Enter file in which to save the key:" `thundroid_rsa`
-  * "Enter passphrase:" (optional)
+* "Enter file in which to save the key:" `thundroid_rsa`
+* "Enter passphrase:" (optional)
 
 On your Thundroid:
 
@@ -204,7 +204,7 @@ On your Thundroid:
 * Create a file to keep track of authorized keys.<br/>
   `nano .ssh/authorized_keys`
   * Paste the content from the Public Key file
-  * Save and close the file
+  * Save & close the file
 * Protect the SSH folder and authorized_keys file with 700 permissions (only owner can read, write, and execute).<br/>
   `chmod -R 700 .ssh/`
 * Disconnect from your Thundroid.<br/>
@@ -217,16 +217,16 @@ On your Thundroid:
   * Change ChallengeResponseAuthentication to "no"
   * Uncomment PasswordAuthentication
   * Change PasswordAuthentication to "no"
-  * Save & Exit
+  * Save & close the file
 * Copy the SSH public key to *root* user, just in case.<br/>
   `sudo mkdir /root/.ssh`<br/>
   `sudo cp /home/admin/.ssh/authorized_keys /root/.ssh/`<br/>
   `sudo chown -R root:root /root/.ssh/`<br/>
   `sudo chmod -R 700 /root/.ssh/`<br/>
   `sudo systemctl restart sshd.service`
-* Exit and login again. 
-  * You should now only be able to login with *admin* or *root* and your SSH key. 
-  * Try to login without your SSH key to make sure it's working properly.
+* Exit (Ctrl+D).
+* Try to login **without** your SSH key to make sure it's working properly. 
+* You should only be able to login with *admin* or *root* and your SSH key. 
 
 ⚠️ Backup your SSH key from your Mac -- copy it onto a USB and lock it in a safe. There is no fallback login if you lose your SSH key!
 
