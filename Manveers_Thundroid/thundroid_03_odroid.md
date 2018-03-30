@@ -36,8 +36,8 @@ I've taken a middle approach: passwords in LastPass, and wallet seed on paper (s
 
 * Connect using SSH and the fixed IP you set up in the Network section. Note: Windows users need [PuTTY](https://www.putty.org/) to get SSH to work (LOL WINDOWS USERS).<br/>
   `ssh root@192.168.0.189`
-* The default password for root is "odroid".<br/>
-* Change root password to password [ A ].<br/>
+* The default password for *root* is "odroid".<br/>
+* Change *root* password to password [ A ].<br/>
   `passwd`
 
 ### Time Zone & Localization
@@ -133,7 +133,7 @@ Filesystem     1K-blocks      Used Available Use% Mounted on
   `chown bitcoin:bitcoin /mnt/hdd/`
 * Make sure *admin* uses bash as standard shell.<br/>
   `sudo chsh admin -s /bin/bash`
-* If you get this error, just restart your Thundroid, log back in as root, and run the command again.
+* If you get this error, just restart your Thundroid, log back in as *root*, and run the command again.
 ```
 sudo: unable to resolve host odroid
 ```
@@ -157,7 +157,7 @@ Your Thundroid will be visible from the internet and therefore needs to be secur
 
 We will configure our firewall to deny all connection attempts from other peers by default and allow only specific ports to be used.
 
-* Change session to "root".<br/>
+* Change session to *root*.<br/>
   `sudo su`
 * Install UFW.<br/>
   `apt install ufw`
@@ -205,7 +205,7 @@ On your Thundroid:
   `nano .ssh/authorized_keys`
   * Paste the content from the Public Key file
   * Save and close the file
-* Protect the SSH folder and authorized_keys file with 700 permissions (only owner can read, write and execute).<br/>
+* Protect the SSH folder and authorized_keys file with 700 permissions (only owner can read, write, and execute).<br/>
   `chmod -R 700 .ssh/`
 * Disconnect from your Thundroid.<br/>
   `exit` (or press Ctrl+D)
@@ -224,9 +224,9 @@ On your Thundroid:
   `sudo chown -R root:root /root/.ssh/`<br/>
   `sudo chmod -R 700 /root/.ssh/`<br/>
   `sudo systemctl restart sshd.service`
-* Exit and login again.
-* You should now only be able to login with *admin* or *root* and your SSH key. 
-* Try to login without your SSH key to make sure it's working properly.
+* Exit and login again. 
+  * You should now only be able to login with *admin* or *root* and your SSH key. 
+  * Try to login without your SSH key to make sure it's working properly.
 
 ⚠️ Backup your SSH key from your Mac -- copy it onto a USB and lock it in a safe. There is no fallback login if you lose your SSH key!
 
