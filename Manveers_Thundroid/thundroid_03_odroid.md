@@ -63,9 +63,9 @@ I've taken a middle approach: passwords in LastPass, and wallet seed on paper (s
   `apt upgrade`
 * If you get this message: **The following packages were automatically installed and are no longer required:** then run this command:<br/>
   `apt autoremove`
-* Note: instead of `apt upgrade`, you can run `apt dist-upgrade`.<br/>
+* Note: instead of `apt upgrade`, you can run `apt full-upgrade` (aka `apt dist-upgrade`).<br/>
   * `apt upgrade` will not change WHAT is installed (only installs new versions).
-  * `apt dist-upgrade` will install or remove packages as necessary to complete the upgrade.
+  * `apt full-upgrade` will install or remove packages as necessary to complete the upgrade.
 * Install **linux-image-xu3**.<br/>
   `apt install linux-image-xu3`
 * Answer [y], then [no] (do not abort).

@@ -20,4 +20,6 @@ While Stadicus' guide was a great starting point,
 
 So with that in mind, I created my own guide. At first it was private and for my own use. I used it kind of like a journal of sorts to try to better understand what I was doing in Stadicus' guide, to document issues I ran into (and the solutions that worked), and to keep track of the tweaks I made. I later realized that this could be useful for other newbies to have access to, so I polished it up a bit and made it public.
 
+Note: This guide assumes you're on MacOS and are somewhat comfortable with Terminal.
+
 Enjoy :)
