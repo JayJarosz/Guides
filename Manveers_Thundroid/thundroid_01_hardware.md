@@ -39,6 +39,7 @@ You might also want to invest in some stickers to cover the top of the case and 
 * [Blockstream's I Got Lightning Working](https://store.blockstream.com/product/lightning-sticker/)
 * [PartyBrew's Bitcoin Moon](https://www.etsy.com/in-en/listing/582859688/bitcoin-moon-sticker-space-seal-sticker)
 
+![Blockstream's I Got Lightning Working Sticker](images/blockstream-lightning-sticker.png)
 
 # Prepare the MicroSD Card
 
@@ -48,6 +49,7 @@ You might also want to invest in some stickers to cover the top of the case and 
 * Extract/unzip the Ubuntu file.
 * Flash the Ubuntu file onto your MicroSD card using [Etcher](https://etcher.io/).
 
+![Flashing with Etcher](images/flashing-with-etcher.png)
 
 # Hardware Assembly
 
@@ -61,8 +63,107 @@ You might also want to invest in some stickers to cover the top of the case and 
 !! Caution: If you ever want to take off the smaller half of the plastic case, be sure to first unplug the cables and remove the SD card. If you take off the plastic case with the SD card still inserted, the SD card might break.
 
 
-# Switching MicroSD Cards
+# Switching MicroSD Cards (for future reference)
+Later on you, once you already have your Thundroid fully set up and running, you might want/need to upgrade your MicroSD card. 
 
-Later on you, once you already have your Thundroid fully set up and running, you might want/need to upgrade your MicroSD card. To do this: ...
+To do this, you'll need to backup an image of your current MicroSD card and then use it to flash a new MicroSD card.
 
-TO DO 
+### Backing up your current MicroSD Card
+
+* Shutdown your Thundroid.<br/>
+  `sudo shutdown -h now`
+* Unplug your Thundroid and remove the MicroSD card.
+* Put the MicroSD card inside of an adapter and then insert it into your Mac.
+* On your Mac, open Terminal and run this command to get a list of all the drives connected to your Mac.<br/>
+  `diskutil list`
+* You can identify your MicroSD card on the list by the size of its FDisk_partition_scheme. In my case, it's 8.0 GB. 
+
+![dev/disk2 8GB-microsd](images/disk2-microsd-old.png)
+
+* Note down the location name of your MicroSD card. In my case, it's **/dev/disk2**.
+* Save a backup of your MicroSD card onto your Mac's home directory. Replace '**disk2**' with the location name of your MicroSD card.<br/>
+  `sudo dd if=/dev/disk2 of=~/sdcard.bin`
+  * 'if' means input file. 
+  * 'of' means output file. 
+  * '~/' is the shortcut for your home directory.
+  * 'sdcard.bin' is what we are naming the backup.
+* Enter your Mac's password and wait for the backup process to finish (it can take as long as 30 minutes or more). Don't do anything else in the Terminal until you see a message similar to this:
+```
+15556608+0 records in
+15556608+0 records out
+7964983296 bytes transferred in 1830.774655 secs (4350608 bytes/sec)
+```
+* Eject the MicroSD card and put in the new one.
+
+### Flashing your New MicroSD Card (Method 1)
+
+* Find out the location name of the new MicroSD card (it will likely be the same).<br/>
+  `diskutil list`
+
+![dev/disk2 64GB-microsd](images/disk2-microsd-new.png)
+
+* Unmount the new MicroSD card.<br/>
+  `diskutil unmountDisk /dev/disk2`
+* Copy the contents of your old MicroSD backup to your new MicroSD.<br/>
+  `sudo dd if=~/sdcard.bin of=/dev/disk2`
+* As before, this process can take 30 minutes or more (mine took almost an hour). Don't do anything else in the Terminal until you see a message similar to this:
+```
+15556608+0 records in
+15556608+0 records out
+7964983296 bytes transferred in 2988.589914 secs (2665131 bytes/sec)
+```
+
+### Flashing your New MicroSD Card (Method 2)
+
+* Instead of using Method 1, you can flash the **sdcard.bin** file onto your new MicroSD using Etcher. It's much, much faster (only about 5-10 minutes).
+
+### Repartitioning 
+
+* Eject the newly flashed MicroSD card from your Mac and insert it into your Thundroid.
+* Power on your Thundroid and then login as *admin* via SSH (as always).
+* Switch to root.<br/>
+  `su -`
+* Install parted.<br/>
+  `sudo apt-get install parted`
+* Run parted.<br/>
+  `parted`
+* Print all disks and their partitions.<br/>
+  `print all`
+
+![parted print all](images/parted-print-all.png)
+
+* Switch to MicroSD (not your SSD/HDD!).<br/>
+  `select /dev/mmcblk1`
+* Resize the ext2 file system of your MicroSD.<br/>
+  `resizepart 2`
+* Warning: Partition /dev/mmcblk1p2 is being used. Are you sure you want to continue? Yes/No?.<br/>
+  `yes` 
+* End? [7964MB]?.<br/>
+  `100%` (or select a custom size like `33GB`, `44000MB`, etc)
+* Exit parted (Ctrl+C).
+* You'll see this message: `Information: You may need to update /etc/fstab.`, but in our case there's no need to update fstab as far as I can tell (someone please correct me if I'm wrong).
+* Restart your Thundroid.<br/>
+  `sudo shutdown -r now`
+* Wait a minute or two and log back in as *admin*.
+* Check the filesystems on your MicroSD card.<br/>
+  `df -h`
+
+![dh-f Before](images/dh-f-before.png)
+
+* You'll notice that the available space hasn't increased yet.
+* Resize your main filesystem to 100%.<br/>
+  `sudo resize2fs /dev/mmcblk1p2`
+* OR: Resize to a custom size.<br/>
+  `sudo resize2fs /dev/mmcblk1p2 44G` (note: no 'B' in '44G')
+* Check the filesystems again. It should now be successfully updated.<br/>
+  `dh -f`
+
+![dh-f After](images/dh-f-after.png)
+
+
+
+
+
+
+
+
