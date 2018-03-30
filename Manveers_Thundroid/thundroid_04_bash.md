@@ -14,8 +14,6 @@ We're going to make *root* user be red, *admin* user be green, and *bitcoin* use
 ![Prettified Prompt](images/prettified_prompt.png)
 
 ### Admin user
-Editing shell prompt for *admin* user:
-
 * Open *admin*'s .bashrc file inside of nano editor.<br/>
   `nano /home/admin/.bashrc`
 * Paste the following settings, then close and save using Ctrl+X (then 'y', then 'enter').
@@ -66,8 +64,6 @@ alias ls='ls -la --color=always'
   `source /home/admin/.bashrc`
 
 ### Bitcoin user
-Editing shell prompt for *bitcoin* user:
-
 * Open *bitcoin*'s .bashrc file inside of nano editor (note: since we are editing bitcoin user's .bashrc file while being logged in as *admin* user, we need to add `sudo` to the command).<br/>
   `sudo nano /home/bitcoin/.bashrc`
 * Paste the following settings, then close and save using Ctrl+X (then 'y', then 'enter').
@@ -111,11 +107,9 @@ alias ls='ls -la --color=always'
 
 
 ### Root user
-Editing shell prompt for *root* user:
-
 * Switch to root user.</br>
   `su -`
-* Backup the original .bashrc file.</br>  
+* Backup the original .bashrc file.</br>
   `mv /root/.bashrc /root/.bashrc-backup`
 * Create a new .bashrc file.</br>
   `nano /root/.bashrc`
