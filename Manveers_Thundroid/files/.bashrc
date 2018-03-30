@@ -2,11 +2,14 @@
 force_color_prompt=yes
 
 # Colors
-BLUE="\[\e[34m\]"
 RED="\[\e[31m\]"
+GREEN="\[\e[32m\]"
 YELLOW="\[\e[33m\]"
-DARK_GRAY="\[\e[90m\]"
+BLUE="\[\e[34m\]"
+MAGENTA="\[\e[35m\]"
+CYAN="\[\e[36m\]"
 LIGHT_GRAY="\[\e[37m\]"
+DARK_GRAY="\[\e[90m\]"
 
 # Formatting
 RESET="\[\e[0m\]"
@@ -26,7 +29,7 @@ LND="\342\232\241" # UTF-8 octal code for Lightning symbol (U+26A1)
 
 # Pimp prompt (leave only one PS1 line uncommented)
 # ADMIN user
-PS1="${DARK_GRAY}\t ${debian_chroot:+($debian_chroot)}${BOLD}${RED}\u ${BOLD}${BLUE}\w ${RESET}${YELLOW}${BTC} ${RESET}"
+PS1="${DARK_GRAY}\t ${debian_chroot:+($debian_chroot)}${BOLD}${GREEN}\u ${BOLD}${BLUE}\w ${RESET}${YELLOW}${BTC} ${RESET}"
 # BITCOIN user
 # PS1="${DARK_GRAY}\t ${debian_chroot:+($debian_chroot)}${BOLD}${YELLOW}\u ${BOLD}${BLUE}\w ${RESET}${YELLOW}${BTC} ${RESET}"
 # debian default

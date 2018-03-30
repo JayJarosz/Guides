@@ -7,27 +7,32 @@
 Since you'll be working on your Thundroid entirely via the shell prompt, it's worth decorating it a bit and installing some shortcuts. Note: Run all of the following commands as *admin* user.
 
 ## Prettifying your Shell Prompt (optional)
-You can redesign your shell prompt for each user by enabling color output and setting a custom prompt.<br/>
-We're going to make *admin* user be red and *bitcoin* user be yellow.
+You can redesign your shell prompt for each user by enabling color output and setting a custom prompt.
+
+We're going to make *root* user be red, *admin* user be green, and *bitcoin* user be yellow.
 
 ![Prettified Prompt](images/prettified_prompt.png)
 
+### Admin user
 Editing shell prompt for *admin* user:
+
 * Open *admin*'s .bashrc file inside of nano editor.<br/>
   `nano /home/admin/.bashrc`
-
-* Paste the following settings, then close and save using Ctrl+X.
+* Paste the following settings, then close and save using Ctrl+X (then 'y', then 'enter').
 
 ```
 # Enable color prompt
 force_color_prompt=yes
 
 # Colors
-BLUE="\[\e[34m\]"
 RED="\[\e[31m\]"
+GREEN="\[\e[32m\]"
 YELLOW="\[\e[33m\]"
-DARK_GRAY="\[\e[90m\]"
+BLUE="\[\e[34m\]"
+MAGENTA="\[\e[35m\]"
+CYAN="\[\e[36m\]"
 LIGHT_GRAY="\[\e[37m\]"
+DARK_GRAY="\[\e[90m\]"
 
 # Formatting
 RESET="\[\e[0m\]"
@@ -47,7 +52,7 @@ LND="\342\232\241" # UTF-8 octal code for Lightning symbol (U+26A1)
 
 # Pimp prompt (leave only one PS1 line uncommented)
 # ADMIN user
-PS1="${DARK_GRAY}\t ${debian_chroot:+($debian_chroot)}${BOLD}${RED}\u ${BOLD}${BLUE}\w ${RESET}${YELLOW}${BTC} ${RESET}"
+PS1="${DARK_GRAY}\t ${debian_chroot:+($debian_chroot)}${BOLD}${GREEN}\u ${BOLD}${BLUE}\w ${RESET}${YELLOW}${BTC} ${RESET}"
 # BITCOIN user
 # PS1="${DARK_GRAY}\t ${debian_chroot:+($debian_chroot)}${BOLD}${YELLOW}\u ${BOLD}${BLUE}\w ${RESET}${YELLOW}${BTC} ${RESET}"
 # debian default
@@ -57,27 +62,29 @@ PS1="${DARK_GRAY}\t ${debian_chroot:+($debian_chroot)}${BOLD}${RED}\u ${BOLD}${B
 # Set "ls" to always use the -la option
 alias ls='ls -la --color=always'
 ```
-
 * Reload *admin*'s .bashrc file so that the changes take effect (or just wait until next login).<br/>
   `source /home/admin/.bashrc`
 
-
+### Bitcoin user
 Editing shell prompt for *bitcoin* user:
+
 * Open *bitcoin*'s .bashrc file inside of nano editor (note: since we are editing bitcoin user's .bashrc file while being logged in as *admin* user, we need to add `sudo` to the command).<br/>
   `sudo nano /home/bitcoin/.bashrc`
-
-* Paste the following settings, then close and save using Ctrl+X (then 'y', then 'enter').<br/>
+* Paste the following settings, then close and save using Ctrl+X (then 'y', then 'enter').
 
 ```
 # Enable color prompt
 force_color_prompt=yes
 
 # Colors
-BLUE="\[\e[34m\]"
 RED="\[\e[31m\]"
+GREEN="\[\e[32m\]"
 YELLOW="\[\e[33m\]"
-DARK_GRAY="\[\e[90m\]"
+BLUE="\[\e[34m\]"
+MAGENTA="\[\e[35m\]"
+CYAN="\[\e[36m\]"
 LIGHT_GRAY="\[\e[37m\]"
+DARK_GRAY="\[\e[90m\]"
 
 # Formatting
 RESET="\[\e[0m\]"
@@ -89,7 +96,7 @@ LND="\342\232\241" # UTF-8 octal code for Lightning symbol (U+26A1)
 
 # Pimp prompt (leave only one PS1 line uncommented)
 # ADMIN user
-# PS1="${DARK_GRAY}\t ${debian_chroot:+($debian_chroot)}${BOLD}${RED}\u ${BOLD}${BLUE}\w ${RESET}${YELLOW}${BTC} ${RESET}"
+# PS1="${DARK_GRAY}\t ${debian_chroot:+($debian_chroot)}${BOLD}${GREEN}\u ${BOLD}${BLUE}\w ${RESET}${YELLOW}${BTC} ${RESET}"
 # BITCOIN user
 PS1="${DARK_GRAY}\t ${debian_chroot:+($debian_chroot)}${BOLD}${YELLOW}\u ${BOLD}${BLUE}\w ${RESET}${YELLOW}${BTC} ${RESET}"
 # debian default
@@ -99,9 +106,53 @@ PS1="${DARK_GRAY}\t ${debian_chroot:+($debian_chroot)}${BOLD}${YELLOW}\u ${BOLD}
 # Set "ls" to always use the -la option
 alias ls='ls -la --color=always'
 ```
-
 * Reload *bitcoin*'s .bashrc file so that the changes take effect (or just wait until next login)<br/>
   `source /home/bitcoin/.bashrc`
+
+
+### Root user
+Editing shell prompt for *root* user:
+
+* Switch to root user.</br>
+  `su -`
+* Backup the original .bashrc file.</br>  
+  `mv /root/.bashrc /root/.bashrc-backup`
+* Create a new .bashrc file.</br>
+  `nano /root/.bashrc`
+* Paste the following settings, then close and save using Ctrl+X (then 'y', then 'enter').
+
+```
+# Enable color prompt
+force_color_prompt=yes
+
+# Colors
+RED="\[\e[31m\]"
+GREEN="\[\e[32m\]"
+YELLOW="\[\e[33m\]"
+BLUE="\[\e[34m\]"
+MAGENTA="\[\e[35m\]"
+CYAN="\[\e[36m\]"
+LIGHT_GRAY="\[\e[37m\]"
+DARK_GRAY="\[\e[90m\]"
+
+# Formatting
+RESET="\[\e[0m\]"
+BOLD="\[\e[1m\]"
+
+# Symbols
+BTC="\342\202\277" # UTF-8 octal code for BTC symbol (U+20BF)
+LND="\342\232\241" # UTF-8 octal code for Lightning symbol (U+26A1)
+SKULL="\342\230\240" # UTF-8 octal code for Skull & Bones symbol (U+2620)
+
+# Prompt design
+PS1="${DARK_GRAY}\t ${debian_chroot:+($debian_chroot)}${BOLD}${RED}\u ${BOLD}${BLUE}\w ${RESET}${RED}${SKULL} ${RESET}"
+
+# Aliases
+# Set "ls" to always use the -la option
+alias ls='ls -la --color=always'
+```
+* Reload *root*'s .bashrc file so that the changes take effect (or just wait until next login)<br/>
+  `source /root/.bashrc`
 
 
 ### Potential Issues
