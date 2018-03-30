@@ -18,6 +18,7 @@ BOLD="\[\e[1m\]"
 # Symbols
 BTC="\342\202\277" # UTF-8 octal code for BTC symbol (U+20BF)
 LND="\342\232\241" # UTF-8 octal code for Lightning symbol (U+26A1)
+SKULL="\342\230\240" # UTF-8 octal code for Skull & Bones symbol (U+2620)
 
 # Escape sequences (guide for newbies)
 #  \[...\] = non-printable sequences should be wrapped in this
@@ -32,6 +33,8 @@ LND="\342\232\241" # UTF-8 octal code for Lightning symbol (U+26A1)
 PS1="${DARK_GRAY}\t ${debian_chroot:+($debian_chroot)}${BOLD}${GREEN}\u ${BOLD}${BLUE}\w ${RESET}${YELLOW}${BTC} ${RESET}"
 # BITCOIN user
 # PS1="${DARK_GRAY}\t ${debian_chroot:+($debian_chroot)}${BOLD}${YELLOW}\u ${BOLD}${BLUE}\w ${RESET}${YELLOW}${BTC} ${RESET}"
+# ROOT user
+# PS1="${DARK_GRAY}\t ${debian_chroot:+($debian_chroot)}${BOLD}${RED}\u ${BOLD}${BLUE}\w ${RESET}${RED}${SKULL} ${RESET}"
 # debian default
 # PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 

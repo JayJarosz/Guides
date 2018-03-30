@@ -158,7 +158,7 @@ AccountingStart month 15 12:00
 #DirPortFrontPage /etc/tor/tor-exit-notice.html
 
 ```
-* Save the configuration with ctrl+x
+* Save the configuration with Ctrl+X.
 * Restart Tor.<br/>
   `sudo service tor@default restart`
 * By default, Tor runs as debian-tor user and its access cookie is not accessible to our *admin* and *bitcoin* users. To change this, run:<br/>
@@ -200,9 +200,9 @@ Be sure to check for updates on a regular basis (or automate the process).
 
 * Check for updates.<br/>
   `sudo apt update`
-* To update only Tor.<br/>
+* To update only Tor:<br/>
   `sudo apt install —only-upgrade tor`
-* To update all packages (recommended).<br/>
+* To update all packages (recommended):<br/>
   `sudo apt upgrade`
 * Restart Tor.<br/>
   `sudo service tor@default restart`
