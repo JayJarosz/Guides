@@ -1,4 +1,4 @@
-[ [Intro](README.md) ] -- [ **Hardware** ] -- [ [Odroid](thundroid_02_odroid.md) ] -- [ [Bash](thundroid_03_bash.md) ] -- [ [Bitcoin](thundroid_04_bitcoin.md) ] -- [ [Lightning](thundroid_05_lnd.md) ] -- [ [Tor](thundroid_06_tor.md) ] -- [ [Web Interface](thundroid_07_webinterface.md) ] -- [ [Contact](thundroid_08_contact.md) ]
+[ [Intro](README.md) ]--[ **Hardware** ]--[ [Network](thundroid_02_network.md) ]--[ [Odroid](thundroid_03_odroid.md) ]--[ [Bash](thundroid_04_bash.md) ]--[ [Bitcoin](thundroid_05_bitcoin.md) ]--[ [Lightning](thundroid_06_lnd.md) ]--[ [Tor](thundroid_07_tor.md) ]--[ [Web Interface](thundroid_08_webinterface.md) ]--[ [Contact](thundroid_09_contact.md) ]
 
 --------
 ### Manveer's Annotated :zap:Thundroid:zap: Guide
@@ -49,7 +49,7 @@ You might also want to invest in some stickers to cover the top of the case and 
 * Flash the Ubuntu file onto your MicroSD card using [Etcher](https://etcher.io/).
 
 
-# Assembly
+# Hardware Assembly
 
 * Insert the SSD/HDD into the HC1/HC2.
 * Flip the HC1/HC2 upside down and secure your SSD/HDD with the included screw.
