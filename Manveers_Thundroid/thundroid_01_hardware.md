@@ -60,9 +60,11 @@ You might also want to invest in some stickers to cover the top of the case and 
 * Plug in the ethernet and power cables.
 * The initial boot can take several minutes. SSH is on by default.
 
-!! Caution: If you ever want to take off the smaller half of the plastic case, be sure to first unplug the cables and remove the SD card. If you take off the plastic case with the SD card still inserted, the SD card might break.
+⚠️ Caution: If you ever want to take off the smaller half of the plastic case, be sure to first unplug the cables and remove the SD card. If you take off the plastic case with the SD card still inserted, the SD card might break.
 
+<br/><br/>
 
+--------
 # Switching MicroSD Cards (for future reference)
 Later on you, once you already have your Thundroid fully set up and running, you might want/need to upgrade your MicroSD card. 
 
@@ -86,7 +88,7 @@ To do this, you'll need to backup an image of your current MicroSD card and then
   * 'if' means input file. 
   * 'of' means output file. 
   * '~/' is the shortcut for your home directory.
-  * 'sdcard.bin' is what we are naming the backup.
+  * 'sdcard.bin' is what we are naming the backup. You can also use a '.img' file type.
 * Enter your Mac's password and wait for the backup process to finish (it can take as long as 30 minutes or more). Don't do anything else in the Terminal until you see a message similar to this:
 ```
 15556608+0 records in
@@ -95,7 +97,7 @@ To do this, you'll need to backup an image of your current MicroSD card and then
 ```
 * Eject the MicroSD card and put in the new one.
 
-### Flashing your New MicroSD Card (Method 1)
+### Flashing your New MicroSD Card (METHOD A)
 
 * Find out the location name of the new MicroSD card (it will likely be the same).<br/>
   `diskutil list`
@@ -113,9 +115,9 @@ To do this, you'll need to backup an image of your current MicroSD card and then
 7964983296 bytes transferred in 2988.589914 secs (2665131 bytes/sec)
 ```
 
-### Flashing your New MicroSD Card (Method 2)
+### Flashing your New MicroSD Card (METHOD B)
 
-* Instead of using Method 1, you can flash the **sdcard.bin** file onto your new MicroSD using Etcher. It's much, much faster (only about 5-10 minutes).
+* Instead of using Method A, you can flash the **sdcard.bin** file onto your new MicroSD using Etcher. It's much, much faster (only about 5-10 minutes).
 
 ### Repartitioning 
 
