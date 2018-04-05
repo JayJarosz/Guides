@@ -1,7 +1,7 @@
 [ [Intro](README.md) ]--[ [Hardware](thundroid_01_hardware.md) ]--[ **Network** ]--[ [Odroid](thundroid_03_odroid.md) ]--[ [Bash](thundroid_04_bash.md) ]--[ [Bitcoin](thundroid_05_bitcoin.md) ]--[ [Lightning](thundroid_06_lnd.md) ]--[ [Tor](thundroid_07_tor.md) ]--[ [Web Interface](thundroid_08_webinterface.md) ]--[ [Contact](thundroid_09_contact.md) ]
 
 --------
-### Manveer's Annotated :zap:Thundroid:zap: Guide
+### Manveer's Expanded :zap:Thundroid:zap: Guide
 --------
 
 Before we can work on our Thundroid, we need to change some network settings. If your router is getting old and you're thinking of buying a new one, now is the perfect time to do so. You'll want to have a router that is enjoyable to work with.

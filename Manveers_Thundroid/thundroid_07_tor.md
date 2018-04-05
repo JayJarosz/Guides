@@ -1,7 +1,7 @@
 [ [Intro](README.md) ]--[ [Hardware](thundroid_01_hardware.md) ]--[ [Network](thundroid_02_network.md) ]--[ [Odroid](thundroid_03_odroid.md) ]--[ [Bash](thundroid_04_bash.md) ]--[ [Bitcoin](thundroid_05_bitcoin.md) ]--[ [Lightning](thundroid_06_lnd.md) ]--[ **Tor** ]--[ [Web Interface](thundroid_08_webinterface.md) ]--[ [Contact](thundroid_09_contact.md) ]
 
 --------
-### Manveer's Annotated :zap:Thundroid:zap: Guide
+### Manveer's Expanded :zap:Thundroid:zap: Guide
 --------
 
 Tor is a service that helps users protect their anonymity while using the Internet. This is important for bitcoin users in countries where bitcoin is banned or viewed under suspicion by the government.
@@ -216,6 +216,6 @@ Be sure to check for updates on a regular basis (or automate the process).
 
 * To update all packages (recommended):<br/>
   `sudo apt upgrade`
-  
+
 * Restart Tor.<br/>
   `sudo service tor@default restart`
