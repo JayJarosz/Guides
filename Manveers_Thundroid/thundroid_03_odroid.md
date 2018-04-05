@@ -231,3 +231,55 @@ On your Thundroid:
 ⚠️ Backup your SSH key from your Mac -- copy it onto a USB and lock it in a safe. There is no fallback login if you lose your SSH key!
 
 Worst case scenario: you'll need to flash the MicroSD card and set up the system again. But luckily all important stuff is on the HDD/SSD and won't be affected :)
+
+
+# Add Safe Shutdown Script
+The Odroid manufacturer recommends applying the following script to park your hard drive for a safe shutdown. 
+
+If you are using an SSD instead of an HDD, this does not apply to you.
+
+As user *admin*:
+
+* Create a downloads directory (if you haven't already).<br/>
+  `mkdir /home/admin/downloads`
+
+* Enter the downloads directory.<br/>
+  `cd downloads`
+
+* Download the Safe Shutdown script.<br/>
+  `wget https://dn.odroid.com/5422/script/odroid.shutdown`
+
+* Check the contents of the script (it should look like what's shown below).<br/>
+  `cat odroid.shutdown`
+
+```
+#!/bin/bash
+exec </dev/null </dev/null 2>/dev/null
+export LANG=C LC_ALL=C
+# In all cases, we want the media to be in quiescent, clean state.
+sync
+[ -x /sbin/mdadm ] && /sbin/mdadm --wait-clean --scan
+# Function used to park all SATA disks.
+function ParkDisks() {
+    if [ -x /sbin/hdparm ]; then
+        Wait=0
+        for Dev in /sys/block/sd* ; do
+            [ -e $Dev ] && /sbin/hdparm -y /dev/${Dev##*/} && Wait=2
+            sleep $Wait
+            echo 1 > /sys/class/block/${Dev##*/}/device/delete
+        done
+        sleep $Wait
+    fi
+}
+case "$1" in
+    # reboot|kexec)
+        # Do not park disks when rebooting or switching kernels.
+    #     ;;
+    *)
+        ParkDisks
+        ;;
+esac
+```
+
+* Install the script.<br/>
+  `sudo install -o root -g root -m 0755 ./odroid.shutdown /lib/systemd/system-shutdown/odroid.shutdown`

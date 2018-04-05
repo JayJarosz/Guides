@@ -94,7 +94,7 @@ zmqpubrawblock=tcp://127.0.0.1:29000
 zmqpubrawtx=tcp://127.0.0.1:29000
 ```
 
-* Save and exit.
+* Save and exit. (Ctrl+X)
 
 
 # Auto-start bitcoind
@@ -133,7 +133,7 @@ RestartSec=30
 WantedBy=multi-user.target
 ```
 
-* Save and exit.
+* Save and exit. (Ctrl+X)
 
 * Enable the systemd unit file and start it manually.<br/>
   `sudo systemctl enable bitcoind`<br/>
