@@ -10,7 +10,9 @@ The base of the Lightning node is a fully trustless Bitcoin Core node. It keeps 
 Be sure to be logged in as *admin*.
 
 * Create a downloads directory (if you haven't already).<br/>
-  `mkdir /home/admin/downloads`<br/>
+  `mkdir /home/admin/downloads`
+
+* Enter the downloads directory.<br/>
   `cd downloads`
 
 * Download the latest Bitcoin Core ARM binaries directly from bitcoin.org (check https://bitcoin.org/en/download).<br/>
@@ -24,7 +26,7 @@ Be sure to be logged in as *admin*.
 
 * Manually check the fingerprint of the public key:<br/>
   `gpg --with-fingerprint ./laanwj-releases.asc`
-  * Expected outputs: "01EA 5486 DE18 A882 D4C2  6845 90C8 019E 36C2 E964"
+  * Expected output: "01EA 5486 DE18 A882 D4C2  6845 90C8 019E 36C2 E964"
 
 * Import the public key of **Wladimir van der Laan**.<br/>
   `gpg --import ./laanwj-releases.asc`
@@ -42,7 +44,7 @@ Be sure to be logged in as *admin*.
   
 * Check active version of the Bitcoin Core binaries.<br/>
   `bitcoind —version`
-  * "Bitcoin Core Daemon version v0.16.0"
+  * Expected output: "Bitcoin Core Daemon version v0.16.0"
 
 
 # Prepare Bitcoin Directory on External HDD/SSD
@@ -55,13 +57,16 @@ Be sure to be logged in as *admin*.
 
 * Add a symbolic link that points to the external HDD/SSD.<br/>
   `ln -s /mnt/hdd/bitcoin /home/bitcoin/.bitcoin`
-  * Note: /home/bitcoin/ is the directory of the *bitcoin* user.
+  * `/home/bitcoin/` is the directory of the *bitcoin* user we created.
+  * `.bitcoin` is the directory of Bitcoin Core (bitcoind).
 
 * Navigate to the home directory.<br/>
   `cd`
 
 * Check the symbolic link.<br/>
   `ls -la`
+
+![HDD Symbolic Link](images/hdd-symbolic-link-highlighted.png)
 
 
 # Configuration
@@ -151,7 +156,7 @@ After rebooting, bitcoind should start and begin to sync and validate the Bitcoi
   `systemctl status bitcoind` 
 
 * See bitcoind in action by monitoring its log file. (exit with Ctrl-C)<br/>
-  `tail -f /home/bitcoin/.bitcoin/debug.log` (mainnet)
+  `tail -f /home/bitcoin/.bitcoin/debug.log` (mainnet)<br/>
   `tail -f /home/bitcoin/.bitcoin/testnet3/debug.log` (testnet)
 
 * Use the Bitcoin Core client `bitcoin-cli` to get information about the current blockchain and its verification (download) progress.<br/>

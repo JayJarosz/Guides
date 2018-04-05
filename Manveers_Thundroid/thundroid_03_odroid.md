@@ -8,19 +8,19 @@
 Below are the passwords you'll need to create for your Thundroid:
 
 ```
-[ A ] root & admin user password
-[ B ] bitcoin user password
-[ C ] Bitcoin RPC password
-[ D ] LND wallet password
-[ E ] LND wallet seed (24 words, will be given to you by LND)
-[ F ] LND seed password (optional)
+[A] root & admin user password
+[B] bitcoin user password
+[C] Bitcoin RPC password
+[D] LND wallet password
+[E] LND wallet seed (24 words, will be given to you by LND)
+[F] LND seed password (optional)
 ```
 All passwords should be at least 12 characters in length. Use a mix of lower and upper caps, numbers, and special characters. But do NOT use uncommon special characters, blanks, or quotes (‘ or “).
 
 Note:
-* Passwords [ A ], [ B ], and [ D ] you'll be using A LOT, so make them something easy to remember yet still secure.
-* Password [ C ] just sits in a config file, so it's fine to generate it using LastPass (LastPass generated passwords are very secure but also very hard to type and remember).
-* Password [ E ] you'll only use if you need to recover your LND wallet.
+* Passwords [A], [B], and [D] you'll be using A LOT, so make them something easy to remember yet still secure.
+* Password [C] just sits in a config file, so it's fine to generate it using LastPass (LastPass generated passwords are very secure but also very hard to type and remember).
+* Password [E] you'll only use if you need to recover your LND wallet.
 
 ### Password Management
 I recommend using [LastPass](https://lastpass.com/f?6752706) to save and manage passwords. I personally don't consider paper notes to be safe or secure if you live with other people, unless you have a safe -- but even then, ask yourself honestly if would you actually store the password sheet in the safe, or keep it somewhere more convenient but less secure?. There's also the risk of losing paper passwords in natural disasters like floods or fires. And if you're a digital nomad and don't have a permanent residence, keep in mind that passwords written in a physical document are subject to search when crossing international borders. Phones are also subject to search, but you can always uninstall your LastPass app before travelling and recover it later.
@@ -37,7 +37,7 @@ I've taken a middle approach: passwords in LastPass, and wallet seed on paper (s
 * Connect using SSH and the fixed IP you set up in the Network section. Note: Windows users need [PuTTY](https://www.putty.org/) to get SSH to work (LOL WINDOWS USERS).<br/>
   `ssh root@192.168.0.189`
 * The default password for *root* is "odroid".<br/>
-* Change *root* password to password [ A ].<br/>
+* Change *root* password to password [A].<br/>
   `passwd`
 
 ### Time Zone & Localization
@@ -100,11 +100,11 @@ For the initial configuration we're logged in as *root* user. In the future, we'
   `useradd -m admin`
 * Give *admin* sudo powers.<br/>
   `adduser admin sudo`
-* Change *admin*'s password to password [ A ].<br/>
+* Change *admin*'s password to password [A].<br/>
   `passwd admin`
 * Create user *bitcoin*.<br/>
   `useradd -m bitcoin`
-* Change *bitcoin*'s password to password [ B ].<br/>
+* Change *bitcoin*'s password to password [B].<br/>
   `passwd bitcoin`
 
 ### Mounting the SSD/HDD
