@@ -12,8 +12,8 @@ While Stadicus' guide was a great starting point,
 
 * I quickly ran into issues not mentioned in the guide that had me stumpted for a while. 
 * I found myself wanting more explanations for the commands we were running.
+* I didn't like jumping between the [Thundroid guide](https://medium.com/@stadicus/perfect-low-cost-%EF%B8%8Flightning%EF%B8%8F-node-4c2f42a4ff7b) and the [RaspiBolt guide](https://github.com/Stadicus/guides/tree/master/raspibolt) to get the full(er) picture.
 * I wanted to skip the testnet and jump right into the mainnet.
-* I became tired of jumping between the [Thundroid guide](https://medium.com/@stadicus/perfect-low-cost-%EF%B8%8Flightning%EF%B8%8F-node-4c2f42a4ff7b) and the [RaspiBolt guide](https://github.com/Stadicus/guides/tree/master/raspibolt) to get the full(er) picture.
 * I wanted to install Bitcoin's blockchain directly from my node (my laptop doesn't have enough space).
 * I wanted to make tweaks to Stadicus' customizations (especially in Bash).
 * I wanted to jump into bonus stuff like Tor and a web interface.

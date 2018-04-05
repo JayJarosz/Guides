@@ -21,10 +21,13 @@ https://medium.com/@meeDamian/bitcoin-through-tor-on-rbp3-12d38a1506f
 * Before starting, make sure your system is up to date.<br/>
   `sudo apt update`<br/>
   `sudo apt full-upgrade`
+
 * Check your debian version. This guide was written for **stretch**, so if your version is different then please proceed with extra care.<br/>
   `lsb_release -c`
-* As part of its operation, `apt` uses a file that lists the 'sources' from which packages can be obtained.
+
+* As part of its operation, `apt` uses a file that lists the 'sources' from which packages can be obtained.<br/>
   `sudo nano /etc/apt/sources.list`
+
 * Add the Tor repository to `apt` by adding the following lines to **sources.list**:
 
 ```
@@ -34,9 +37,11 @@ deb-src http://deb.torproject.org/torproject.org xenial main
 
 * Install dirmngr, which is a server for managing and downloading OpenPGP and X.509 certificates. Dirmngr is used for network access by gpg, gpgsm, and dirmngr-client, among other tools. Unless this package is installed, the parts of the GnuPG suite that try to interact with the network will fail.<br/>
   `sudo apt install dirmngr`
+
 * Add the Tor signing key.<br/>
   `gpg --keyserver keys.gnupg.net --recv 886DDD89`<br/>
   `gpg --export A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89 | sudo apt-key add -`
+
 * Install Tor & Tor-arm. Tor-arm is not required, but it provides a useful tor dashboard, visualising what’s going on with your node.<br/>
   `sudo apt install tor tor-arm`
 
@@ -49,8 +54,9 @@ Warning: Proper Tor configuration is VERY important. Misconfigured node can end 
 
 Make sure your Tor node is configured correctly and always up to date
 
-* Open Tor's configuration file.
+* Open Tor's configuration file.<br/>
   `sudo nano /etc/tor/torrc`
+
 * If you only want to make your Bitcoin node accessible through the Tor network, and NOT run a Middle Relay, then paste these settings:
 
 ```
@@ -159,11 +165,14 @@ AccountingStart month 15 12:00
 
 ```
 * Save the configuration with Ctrl+X.
+
 * Restart Tor.<br/>
   `sudo service tor@default restart`
+
 * By default, Tor runs as debian-tor user and its access cookie is not accessible to our *admin* and *bitcoin* users. To change this, run:<br/>
   `sudo usermod -a -G debian-tor admin`<br/>
   `sudo usermod -a -G debian-tor bitcoin`
+
 * Verify that it succeeded (make sure that debian-tor is in the output for each user).<br/>
   `id admin`<br/>
   `id bitcoin`
@@ -173,6 +182,7 @@ AccountingStart month 15 12:00
 * Restart your Bitcoin node.<br/>
   `sudo su bitcoin`<br/>
   `bitcoin-cli stop`
+
 * Wait until it fully terminates, then start it again.<br/>
   `bitcoind`
 
@@ -180,17 +190,17 @@ AccountingStart month 15 12:00
 ## Check Status
 Your Bitcoin node should now automatically connect through Tor as well. The easiest way to verify the connection succeeded is by checking the logs.
 
-* Check logs for Mainnet node.<br/>
-  `tail -f ~/.bitcoin/debug.log | grep tor`, or<br/>
-  `sudo cat /home/bitcoin/.bitcoin/debug.log | grep tor:`
-* Check logs for Testnet node.<br/>
-  `tail -f ~/.bitcoin/testnet3/debug.log | grep tor`, or<br/>
-  `sudo cat /home/bitcoin/.bitcoin/testnet3/debug.log | grep tor:`
-* Finally, verify your Bitcoin node is reachable via Tor. Go to [bitnodes.earn.com](https://bitnodes.earn.com/) and paste your .onion address there.
+* Check logs to see if Tor is recognized by bitcoind.<br/>
+  `sudo cat /home/bitcoin/.bitcoin/debug.log | grep tor:` (mainnnet)<br/>
+  `sudo cat /home/bitcoin/.bitcoin/testnet3/debug.log | grep tor:` (testnet)
+
+* If everything is working well, this command will show you your node's .onion address.
+  
+You can also verify your Bitcoin node is publicly reachable via Tor by going to [bitnodes.earn.com](https://bitnodes.earn.com/) and pasting your .onion address there.
 
 ![Bitcoin node reachable via Tor](images/verify-bitcoin-node-tor.png)
 
-If you opted to run a Middle Relay, you can check its status using the `arm` command.
+If you opted to run a **Middle Relay**, you can check its status using the `arm` command.
 
 ![Tor Arm](images/tor-arm.png)
 
@@ -200,9 +210,12 @@ Be sure to check for updates on a regular basis (or automate the process).
 
 * Check for updates.<br/>
   `sudo apt update`
+
 * To update only Tor:<br/>
   `sudo apt install —only-upgrade tor`
+
 * To update all packages (recommended):<br/>
   `sudo apt upgrade`
+  
 * Restart Tor.<br/>
   `sudo service tor@default restart`
