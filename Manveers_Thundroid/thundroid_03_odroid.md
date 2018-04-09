@@ -190,7 +190,8 @@ On your Mac:
 
 * Create a RSA key pair.<br/>
   `ssh-keygen -t rsa`
-* "Enter file in which to save the key:" `thundroid_rsa`
+* "Enter file in which to save the key:"<br/>
+  `thundroid_rsa`
 * "Enter passphrase:" (optional)
 
 On your Thundroid:
@@ -283,3 +284,64 @@ esac
 
 * Install the script.<br/>
   `sudo install -o root -g root -m 0755 ./odroid.shutdown /lib/systemd/system-shutdown/odroid.shutdown`
+
+
+# LED Settings
+The Odroid has a very bright blue blinking LED that will light up your ceiling. If you keep your Odroid in your bedroom, this can be very annoying at night when you're trying to fall asleep.
+
+Here's how you can permanently turn off the blinking blue LED:
+
+* Login as *admin* user.
+
+* Open the `/etc/rc.local` file using Nano editor.<br/>
+  `sudo nano /etc/rc.local` (as admin)
+
+* Paste this line before `exit 0`.<br/>
+
+```
+echo none > /sys/class/leds/blue:heartbeat/trigger
+```
+
+* Save & exit (Ctrl+X).
+
+* Restart your odroid.
+  `sudo shutdown -r now`
+
+<br/>
+If you want to learn more about how LEDs work on Odroid, here are some useful commands. 
+
+* Switch to *root* user. It's needed to change LED settings like `trigger`. (Using `sudo` as *admin* doesn't work).
+  `su -`
+
+* View a list of LEDs on your Odroid.<br/>
+  `cd /sys/class/leds`<br/>
+  `ls`<br/>
+  * Note: it does not appear to show the red power LED, the yellow/orange ethernet LED, or the green blinking LED.
+  * You'll see `rt2800usb-phy0::assoc`, `rt2800usb-phy0::quality`, `rt2800usb-phy0::radio`, but their triggers are set to `none` (off) so I'm not sure what they are for.
+
+![Our Odroid's LEDs](images/odroid-LEDs.png)
+
+* Change into the directory that represents the blue LED.<br/>
+  `cd /sys/class/leds/blue:heartbeat`
+
+* View a list of all supported LED modes (for the LED whose directory you're in), and the LED mode that is currently used [heartbeat].</br>
+  `cat trigger`
+
+```
+none rc-feedback kbd-scrolllock kbd-numlock kbd-capslock kbd-kanalock kbd-shiftlock kbd-altgrlock kbd-ctrllock kbd-altlock kbd-shiftllock kbd-shiftrlock kbd-ctrlllock kbd-ctrlrlock mmc0 mmc1 [heartbeat] rfkill-any rfkill0 phy0rx phy0tx phy0assoc phy0radio 
+```
+
+* LED modes explained:
+  * **heartbeat**: The default mode. It blinks like a heartbeat when the kernel is active. The frequency of the beat depends on CPU load.
+  * **none**: Deactivates the LED completly.
+
+* Change LED mode.<br/>
+  `echo [name of LED mode] > trigger`
+
+* If you want to make any `trigger` settings permanent, you have to include them in the `/etc/rc.local` file. 
+
+Note: the HC1/HC2's blue LED does not appear to have many customization options. For example, if you run `ls` inside the `/sys/class/leds/blue:heartbeat` directory, you won't see `delay_on` and `delay_off` options. Also, `max_brightness` is not editable, and `trigger` is missing some common options like `torch`. 
+
+Instead of turning off the blue LED, I would have preferred to reduce its brightness and slow down its blink speed (or just make it stay on without any blinking) -- but unfortunately none of these seem possible on a HC1/HC2. If I'm wrong, please let me know!
+
+![Blue LED options](images/odroid-LED-blue.png)
