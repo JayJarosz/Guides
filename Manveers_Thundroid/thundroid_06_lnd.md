@@ -126,27 +126,30 @@ export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
   `sudo cp lnd lncli /usr/local/bin/`
 
 
-# LND Configuration
-Now that LND is installed, we need to configure it to work with Bitcoin Core and run automatically on startup.
+# Prepare LND Directory on External HDD/SSD
 
 * Open session with *bitcoin* user.<br/>
   `sudo su bitcoin`
 
-* Create LND folder on your HDD.<br/>
+* Create a `lnd` folder on your external HDD/SSD.<br/>
   `mkdir /mnt/hdd/lnd`
 
-* Link LND folder on HDD to shortcut on MicroSD.<br/>
+* Link the `lnd` folder to a shortcut on the MicroSD card.<br/>
   `ln -s /mnt/hdd/lnd /home/bitcoin/.lnd`
 
 * Return to *bitcoin*'s home directory.<br/>
   `cd`
 
-* Check symbolic link.<br/>
+* Check the link.<br/>
   `ls -la`
 
 ![Symbolic Links](images/hdd-symbolic-link.png)
 
-* Create LND configuration file.<br/>
+
+# LND Configuration
+Now that LND is installed, we need to configure it to work with Bitcoin Core and run automatically on startup.
+
+* Create the configuration file for LND.<br/>
   `nano /home/bitcoin/.lnd/lnd.conf`
 
 * Paste the following configuration AND edit the `alias` (your node's public name) and customize your node's color.
