@@ -324,7 +324,7 @@ If you want to learn more about how LEDs work on Odroid, here are some useful co
 * Change into the directory that represents the blue LED.<br/>
   `cd /sys/class/leds/blue:heartbeat`
 
-* View a list of all supported LED modes (for the LED whose directory you're in), and the LED mode that is currently used [heartbeat].</br>
+* View a list of all supported LED modes (for the LED whose directory you're in), and the LED mode that is currently used [heartbeat].<br/>
   `cat trigger`
 
 ```
@@ -345,3 +345,5 @@ Note: the HC1/HC2's blue LED does not appear to have many customization options.
 Instead of turning off the blue LED, I would have preferred to reduce its brightness and slow down its blink speed (or just make it stay on without any blinking) -- but unfortunately none of these seem possible on a HC1/HC2. If I'm wrong, please let me know!
 
 ![Blue LED options](images/odroid-LED-blue.png)
+
+Further reading: [LED handling under Linux](https://github.com/hardkernel/linux/blob/odroid-3.8.y/Documentation/leds/leds-class.txt).
