@@ -234,7 +234,27 @@ On your Thundroid:
 Worst case scenario: you'll need to flash the MicroSD card and set up the system again. But luckily all important stuff is on the HDD/SSD and won't be affected :)
 
 
-# Add Safe Shutdown Script
+# Connect to your Odroid outside of your home network (optional)
+You may want or need to work on your Odroid when you are away from your home network/router. In order to do this, you'll need to keep track of your router's public IP address and open port 22 for SSH. Be aware though that this exposes your Odroid to more attackers.
+
+* On your router, open Port 22. Refer back to the "Port Forwarding" instructions in the Network page if you need to.
+  * Service type: `SSH`
+  * External & internal port: `22`
+  * Protocol: `TCP`
+  * Internal IP: same as before (the fixed IP we set for our Odroid)
+
+* On your Odroid, as *root* user, open Port 22. Refer back to the "Uncomplicated FireWall" instructions on this page if you need to.<br/>
+  `ufw allow 22 comment 'allow SSH from anywhere'`
+
+* You can now login to your Odroid from anywhere in the world. Just replace the `ROUTER_EXTERNAL_IP` and `SSH_KEY_LOCATION` values in the following command.<br/>
+  `ssh admin@ROUTER_EXTERNAL_IP -i SSH_KEY_LOCATION`
+
+This is not much different from before. Instead of using our Odroid's internal IP, we are now just using our Router's external IP.
+
+Note: the external IP of a your home network/router can change from time to time. So if suddenly you can no longer login using the above command, you might just need to update the external IP in the command. I personally love TP-link routers because they have a mobile app from which you can see up-to-date stats on your home router (like it's current external IP) from anywhere in the world.
+
+
+# Add Safe Shutdown Script (recommended for HDD, optional for SSD)
 The Odroid manufacturer recommends applying the following script to park your hard drive for a safe shutdown. 
 
 If you are using an SSD instead of an HDD, this does not apply to you.
@@ -286,7 +306,7 @@ esac
   `sudo install -o root -g root -m 0755 ./odroid.shutdown /lib/systemd/system-shutdown/odroid.shutdown`
 
 
-# LED Settings
+# LED Settings (optional)
 The Odroid has a very bright blue blinking LED that will light up your ceiling. If you keep your Odroid in your bedroom, this can be very annoying at night when you're trying to fall asleep.
 
 Here's how you can permanently turn off the blinking blue LED:
