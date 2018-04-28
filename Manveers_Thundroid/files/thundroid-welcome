@@ -145,7 +145,7 @@ ${color_yellow}   /.                  %s
 "Thundroid" \
 "-----------------------------------------------------------------------" \
 "${load}" \
-"Ressources free" "${btc_title}" "Lightning (LND)" \
+"Resources free" "${btc_title}" "Lightning (LND)" \
 "${ram}" "${sync}" "${ln_alias}" \
 "${sd}" "${sync_behind}" "${ln_channels_online}" "${ln_channels_total}" \
 "${hdd}" "${public}" \
