@@ -18,7 +18,7 @@
 * [Ethernet Cable CAT6](http://www.hardkernel.com/main/products/prdt_info.php?g_code=G1416375765180)
 * optional: Wifi Module
   * [Wifi Module 0](http://www.hardkernel.com/main/products/prdt_info.php?g_code=G145431421052) if your Thundroid will be near your router.
-  * Wifi Module 3/4/5 if your Thundroid will be far away from your router.
+  * Wifi Module [3](http://www.hardkernel.com/main/products/prdt_info.php?g_code=G137447734369)/[4](http://www.hardkernel.com/main/products/prdt_info.php?g_code=G141630348024)/[5](http://www.hardkernel.com/main/products/prdt_info.php?g_code=G147513281389) if your Thundroid will be far away from your router.
 
 Now depending on whether you're planning to use a 3.5" HDD or a 2.5" HDD/SSD, you have two different shopping lists:
 
