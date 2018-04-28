@@ -39,7 +39,7 @@ You might also want to invest in some stickers to cover the top of the case and 
 * [Blockstream's I Got Lightning Working](https://store.blockstream.com/product/lightning-sticker/)
 * [PartyBrew's Bitcoin Moon](https://www.etsy.com/in-en/listing/582859688/bitcoin-moon-sticker-space-seal-sticker)
 
-![Blockstream's I Got Lightning Working Sticker](images/blockstream-lightning-sticker.png)
+!["Manveer's Thundroid"](images/manveers-thundroid.jpg)
 
 # Prepare the MicroSD Card
 
