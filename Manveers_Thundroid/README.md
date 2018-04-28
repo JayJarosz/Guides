@@ -4,6 +4,8 @@
 ### Manveer's Expanded :zap:Thundroid:zap: Guide
 --------
 
+!["Manveer's Thundroid"](images/manveers-thundroid.jpg)
+
 I've been telling myself for over a year that I'll set up a Bitcoin node, but I would always procrastinate. I don't have enough space left on my MacBook Pro, and the commonly and cheaply available RaspberryPi has several performance issues.
 
 Then one day I saw Stadicus' article on Medium: ["The perfect Bitcoin Lightning node"](https://medium.com/@stadicus/perfect-low-cost-%EF%B8%8Flightning%EF%B8%8F-node-4c2f42a4ff7b). The photo of his Thundroid was oddly tantalizing, and I loved his choice of Odroid over RaspberryPi. The next thing I knew I was ordering an Odroid kit from South Korea. 
