@@ -35,6 +35,8 @@ deb http://deb.torproject.org/torproject.org xenial main
 deb-src http://deb.torproject.org/torproject.org xenial main
 ```
 
+* Save & close the file. (Ctrl+X)
+
 * Install dirmngr, which is a server for managing and downloading OpenPGP and X.509 certificates. Dirmngr is used for network access by gpg, gpgsm, and dirmngr-client, among other tools. Unless this package is installed, the parts of the GnuPG suite that try to interact with the network will fail.<br/>
   `sudo apt install dirmngr`
 
@@ -48,8 +50,8 @@ deb-src http://deb.torproject.org/torproject.org xenial main
 
 ## Configuring Tor
 Warning: Proper Tor configuration is VERY important. Misconfigured node can end up:
-* using up all of your internet quota;
-* having ISP suspending/terminating your internet contract;
+* using up all of your internet quota,
+* having ISP suspending/terminating your internet contract,
 * and, in some more draconian jurisdiction, with you in jail(!).
 
 Make sure your Tor node is configured correctly and always up to date
@@ -164,7 +166,7 @@ AccountingStart month 15 12:00
 #DirPortFrontPage /etc/tor/tor-exit-notice.html
 
 ```
-* Save the configuration with Ctrl+X.
+* Save & close the configuration file. (Ctrl+X)
 
 * Restart Tor.<br/>
   `sudo service tor@default restart`

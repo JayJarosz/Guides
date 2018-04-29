@@ -23,10 +23,16 @@ Look at all the devices connected to your home network and identify the IP addre
 
 
 # Port Forwarding
-Our Thundroid will be behind two firewalls: the first is on the router, and the second is on the Thundroid itself (we'll be installing UFW Uncomplicated Firewall). For programs on your Thundroid to work properly, you'll need to open ports on BOTH firewalls.
+Our Thundroid will be behind two firewalls: 
+1. the first is on the router
+2. the second is on the Thundroid itself (we'll be installing UFW Uncomplicated Firewall)
+
+For programs on your Thundroid to work properly, you'll need to open ports on BOTH firewalls.
+
+Below are the settings you need to add to your router. We'll look at UFW settings in the next section.
 
 ![Port Forwarding on TP-Link Router](images/tp-link-port-forwarding.png)
 
 Make sure the IP in the Port Forwarding settings matches the fixed IP we set in the last section.
 
-The 9001 port is optional. Only open it if you plan to support Tor on your Thundroid.
+The **9001** port is optional. Only open it if you plan to support Tor on your Thundroid.

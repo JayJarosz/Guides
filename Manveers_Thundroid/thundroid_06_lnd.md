@@ -1,10 +1,10 @@
-[ [Intro](README.md) ]--[ [Hardware](thundroid_01_hardware.md) ]--[ [Network](thundroid_02_network.md) ]--[ [Odroid](thundroid_03_odroid.md) ]--[ [Bash](thundroid_04_bash.md) ]--[ [Bitcoin](thundroid_05_bitcoin.md) ]--[ [Lightning](thundroid_06_lnd.md) ]--[ [Tor](thundroid_07_tor.md) ]--[ [Web Interface](thundroid_08_webinterface.md) ]--[ [Contact](thundroid_09_contact.md) ]
+[ [Intro](README.md) ]--[ [Hardware](thundroid_01_hardware.md) ]--[ [Network](thundroid_02_network.md) ]--[ [Odroid](thundroid_03_odroid.md) ]--[ [Bash](thundroid_04_bash.md) ]--[ [Bitcoin](thundroid_05_bitcoin.md) ]--[ **Lightning** ]--[ [Tor](thundroid_07_tor.md) ]--[ [Web Interface](thundroid_08_webinterface.md) ]--[ [Contact](thundroid_09_contact.md) ]
 
 --------
 ### Manveer's Expanded :zap:Thundroid:zap: Guide
 --------
 
-There are three implementations of Lightning: LND, eclair, and c-lightning. We will be using the LND implementation.
+There are three implementations of Lightning: [LND](https://github.com/lightningnetwork/lnd), [c-lightning](https://github.com/ElementsProject/lightning), and [eclair](https://github.com/ACINQ/eclair). We will be using the **LND** implementation.
 
 The other two implementations can also be installed, but **only one implementation should run at any given time**.
 
@@ -12,7 +12,7 @@ The other two implementations can also be installed, but **only one implementati
 # Public IP Script
 To announce our public IP address to the Lightning network, we need to first get it from a source outside of our network. 
 
-As user *admin*, create the following script that checks the IP every 10 minutes (600 seconds) and stores it locally.
+As *admin* user, create the following script that checks the IP every 10 minutes (600 seconds) and stores it locally.
 
 * Create script `getpublicip.sh`.<br/>
   `sudo nano /usr/local/bin/getpublicip.sh`
@@ -30,7 +30,7 @@ while [ 0 ];
 done;
 ```
 
-* Save and exit (Ctrl+X).
+* Save & close the file. (Ctrl+X)
 
 * Make the script executable.<br/>
   `sudo chmod +x /usr/local/bin/getpublicip.sh`
@@ -56,7 +56,7 @@ TimeoutSec=10
 WantedBy=multi-user.target
 ```
 
-* Save and exit (Ctrl+X).
+* Save & close the file. (Ctrl+X)
 
 * Enable systemd startup.<br/>
   `sudo systemctl enable getpublicip`<br/>
@@ -100,6 +100,8 @@ As *admin* user:
 export GOPATH=/home/admin/go
 export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
 ```
+
+* Save & close the file. (Ctrl+X)
 
 * Reload *admin*'s `.bashrc`.<br/>
   `source /home/admin/.bashrc`
@@ -179,6 +181,10 @@ bitcoin.mainnet=1
 #autopilot.allocation=0.6
 ```
 
+* Note: we are jumping straight into **mainnet** with this configuration.
+
+* Save & close the file. (Ctrl+X)
+
 * Exit *bitcoin* user session and go back to *admin* user.<br/>
   `exit` (or Ctrl+D)
 
@@ -218,6 +224,8 @@ RestartSec=60
 WantedBy=multi-user.target
 ```
 
+* Save & close the file. (Ctrl+X)
+
 * Enable and start LND.<br/>
   `sudo systemctl enable lnd`<br/>
   `sudo systemctl start lnd`<br/>
@@ -240,7 +248,7 @@ Note: for security reasons, only our *bitcoin* user can interact with bitcoind a
 
 * Enter password [D] as wallet password.
 * Select `n` (no) regarding an existing seed.
-* Enter optional password [F] as seed passphrase. 
+* Enter optional password [E] as seed passphrase. 
 * A new cipher seed consisting of 24 words will be created.
   * These 24 words, combined with your passphrase (optional) is all that you need to restore your Bitcoin LND wallet and all Lighting channels. 
   * The current state of your channels, however, cannot be recreated from this seed, this requires a continuous backup and is still under development for LND.
@@ -251,7 +259,7 @@ Note: for security reasons, only our *bitcoin* user can interact with bitcoind a
 # Assign LND permissions to *admin* (optional)
 If you want *admin* user to be able to run `lncli` commands, you'll need to do the following:
 
-* Check if permission files `admin.macaroon` and `readonly.macaroon` have been created (if not, see open LND issue #890).<br/>
+* Make sure permission files `admin.macaroon` and `readonly.macaroon` have been created.<br/>
   `ls -la /home/bitcoin/.lnd/`
 
 * Create an LND directory for *admin* user.<br/>
@@ -320,7 +328,17 @@ We are going to put our mainnet node to use by buying Blockstream's [I Got Light
 * Open a channel with Blockstream's node. Replace `amount_in_satoshis` with the number of satoshis you plan to spend at Blockstream's store PLUS a bit extra (see below for the reason why). I used `110000` satoshis, which is 0.0011 XBT or roughly 10 USD. The minimum channel size is `20000` satoshis or 0.0002 XBT.<br/>
   `lncli openchannel 02f6725f9c1c40333b67faea92fd211c183050f28df32cac3f9d69685fe9665432 amount_in_satoshis`
 
-* IMPORTANT: Opening a Lightning channel requires creating a transaction on Bitcoin's blockchain, so you'll lose some of your satoshis to miner fees. Closing the channel requires a second transaction on Bitcoin's blockchain, and you'll again lose some of your satoshis to miner fees.<br/><br/>So you need to fund your channel with more satoshis than the amount of your invoice from Blockstream. This is because a portion of the channel balance will be held as a "commit fee" to pay for the miner fees needed to close the channel in the future.<br/><br/>Also, your channel amount has to be less than the size your Lightning wallet balance. This is because **opening** miner fees are taken from your wallet balance outside of your channel amount, whereas **closing** miner fees are taken from the channel amount itself.<br/><br/>*For example: to open a 110,000 satoshi channel, I needed 113,130 satoshis in my Lightning wallet because 3,130 satoshis went for opening fees. Also, of the 110,000 satoshi channel amount, 3,620 satoshi were held for the "commit fee". When I finally closed the channel with Blockstream, the closing fee was just 1,295 satoshi, so I was returned 2,325 satoshi of the commit fee.*
+---
+
+IMPORTANT: Opening a Lightning channel requires creating a transaction on Bitcoin's blockchain, so you'll lose some of your satoshis to miner fees. Closing the channel requires a second transaction on Bitcoin's blockchain, and you'll again lose some of your satoshis to miner fees.
+
+So you need to fund your channel with more satoshis than the amount of your invoice from Blockstream. This is because a portion of the channel balance will be held as a "commit fee" to pay for the miner fees needed to close the channel in the future.
+
+Also, your channel amount has to be less than the size your Lightning wallet balance. This is because **opening** miner fees are taken from your wallet balance outside of your channel amount, whereas **closing** miner fees are taken from the channel amount itself.
+
+*For example: to open a 110,000 satoshi channel, I needed 113,130 satoshis in my Lightning wallet because 3,130 satoshis went for opening fees. Also, of the 110,000 satoshi channel amount, 3,620 satoshi were held for the "commit fee". When I finally closed the channel with Blockstream, the closing fee was just 1,295 satoshi, so I was returned 2,325 satoshi of the commit fee.*
+
+---
 
 * View the blockchain transaction used to open your channel.<br/>
   `lncli listchaintxns`
@@ -588,7 +606,7 @@ Follow these instructions if you want to switch between mainnet and testnet.
 #testnet=1
 ```
 
-* Save & exit (Ctrl+X).
+* Save & close the file. (Ctrl+X)
 
 * Edit the `lnd.conf` file.<br/>
   `sudo nano /home/bitcoin/.lnd/lnd.conf`
@@ -599,7 +617,7 @@ Follow these instructions if you want to switch between mainnet and testnet.
 bitcoin.mainnet=1
 ```
 
-* Save & exit (Ctrl+X).
+* Save & close the file. (Ctrl+X)
 
 * Currently when switching between testnet and mainnet on LND, you need to manually wipe all macaroon db files so new ones can be generated. If you skip this step, your LND wallet will have errors and not work.<br/>
   `sudo su bitcoin`<br/>

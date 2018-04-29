@@ -12,8 +12,7 @@ Below are the passwords you'll need to create for your Thundroid:
 [B] bitcoin user password
 [C] Bitcoin RPC password
 [D] LND wallet password
-[E] LND wallet seed (24 words, will be given to you by LND)
-[F] LND seed password (optional)
+[E] LND seed password (optional)
 ```
 All passwords should be at least 12 characters in length. Use a mix of lower and upper caps, numbers, and special characters. But do NOT use uncommon special characters, blanks, or quotes (‘ or “).
 
@@ -22,19 +21,21 @@ Note:
 * Password [C] just sits in a config file, so it's fine to generate it using LastPass (LastPass generated passwords are very secure but also very hard to type and remember).
 * Password [E] you'll only use if you need to recover your LND wallet.
 
+Also, you'll be given a 24 word seed for your LND wallet that you'll need to write down and store in a safe place somewhere.
+
 ### Password Management
-I recommend using [LastPass](https://lastpass.com/f?6752706) to save and manage passwords. I personally don't consider paper notes to be safe or secure if you live with other people, unless you have a safe -- but even then, ask yourself honestly if would you actually store the password sheet in the safe, or keep it somewhere more convenient but less secure?. There's also the risk of losing paper passwords in natural disasters like floods or fires. And if you're a digital nomad and don't have a permanent residence, keep in mind that passwords written in a physical document are subject to search when crossing international borders. Phones are also subject to search, but you can always uninstall your LastPass app before travelling and recover it later.
+I recommend using [LastPass](https://lastpass.com/f?6752706) to save and manage passwords. I personally don't consider paper notes to be safe or secure if you live with other people, unless you have a safe box -- but even then, ask yourself honestly if would you actually store the password sheet in the safe box, or keep it somewhere more convenient but less secure? There's also the risk of losing paper passwords in natural disasters like floods or fires. And if you're a digital nomad and don't have a permanent residence, keep in mind that passwords written in a physical document are subject to search when crossing international borders. Phones are also subject to search, but you can always uninstall your LastPass app before travelling and recover it later.
 
 But there are those who think digital password storage is still more risky. You'll have to do your own research, balance risk and convenience based on your living situation, and then make your own decision.
 
-I've taken a middle approach: passwords in LastPass, and wallet seed on paper (stored inside of a fire-proof safe). 
+I've taken a middle approach: passwords in LastPass, and LND wallet seed on paper (stored inside of a fire-proof safe box). 
 
 
 # Basic Configuration
 
 ### Connect to your Odroid
 
-* Connect using SSH and the fixed IP you set up in the Network section. Note: Windows users need [PuTTY](https://www.putty.org/) to get SSH to work (LOL WINDOWS USERS).<br/>
+* Connect using SSH and the fixed IP you set up in the Network section. Note: Windows users need [PuTTY](https://www.putty.org/) to get SSH to work (lol Windows users).<br/>
   `ssh root@192.168.0.189`
 * The default password for *root* is "odroid".<br/>
 * Change *root* password to password [A].<br/>
@@ -61,7 +62,11 @@ I've taken a middle approach: passwords in LastPass, and wallet seed on paper (s
   `apt update`
 * Install updates.<br/>
   `apt upgrade`
-* If you get this message: **The following packages were automatically installed and are no longer required:** then run this command:<br/>
+* If you get this message:
+```
+The following packages were automatically installed and are no longer required
+```
+* Then run this command:<br/>
   `apt autoremove`
 * Note: instead of `apt upgrade`, you can run `apt full-upgrade` (aka `apt dist-upgrade`).<br/>
   * `apt upgrade` will not change WHAT is installed (only installs new versions).
@@ -117,8 +122,11 @@ For the initial configuration we're logged in as *root* user. In the future, we'
   `lsblk -o UUID,NAME,FSTYPE,SIZE,LABEL,MODEL`
 * Open fstab file in Nano editor .<br/>
   `nano /etc/fstab`
-  * Paste this line at the end of fstab (be sure to replace the UUID with your own).<br/>
-    `UUID=b27dbaa1-6809-45d1-89dd-e3b700b46074 /mnt/hdd ext4 noexec,defaults 0 0`
+* Paste this line at the end of fstab (**be sure to replace the UUID with your own**).<br/>
+```
+UUID=b27dbaa1-6809-45d1-89dd-e3b700b46074 /mnt/hdd ext4 noexec,defaults 0 0
+```
+* Save & close the file using Ctrl+X (then 'y', then 'enter').
 * Create mount point for the SSD/HDD.<br/>
   `mkdir /mnt/hdd`
 * Mount all filesystems.<br/>
@@ -204,21 +212,21 @@ On your Thundroid:
   `mkdir .ssh`
 * Create a file to keep track of authorized keys.<br/>
   `nano .ssh/authorized_keys`
-  * Paste the content from the Public Key file
-  * Save & close the file
+  * Paste the content from the Public Key file.
+  * Save & close the file (Ctrl+X).
 * Protect the SSH folder and authorized_keys file with 700 permissions (only owner can read, write, and execute).<br/>
   `chmod -R 700 .ssh/`
 * Disconnect from your Thundroid.<br/>
   `exit` (or press Ctrl+D)
 * Login to *admin* again, but this time using your SSH key.<br/>
   `ssh admin@192.168.0.189 -i /Users/Manveer/.ssh/thundroid_rsa`
-  * Be sure to use the file location of your own public key
+  * Be sure to use the file location of your own public key.
 * If you can login to *admin* with your SSH key, disable password login.<br/>
   `sudo nano /etc/ssh/sshd_config`
-  * Change ChallengeResponseAuthentication to "no"
-  * Uncomment PasswordAuthentication
-  * Change PasswordAuthentication to "no"
-  * Save & close the file
+  * Change ChallengeResponseAuthentication to "no".
+  * Uncomment PasswordAuthentication.
+  * Change PasswordAuthentication to "no".
+  * Save & close the file. (Ctrl+X)
 * Copy the SSH public key to *root* user, just in case.<br/>
   `sudo mkdir /root/.ssh`<br/>
   `sudo cp /home/admin/.ssh/authorized_keys /root/.ssh/`<br/>
@@ -254,10 +262,10 @@ This is not much different from before. Instead of using our Odroid's internal I
 Note: the external IP of a your home network/router can change from time to time. So if suddenly you can no longer login using the above command, you might just need to update the external IP in the command. I personally love TP-link routers because they have a mobile app from which you can see up-to-date stats on your home router (like it's current external IP) from anywhere in the world.
 
 
-# Add Safe Shutdown Script (recommended for HDD, optional for SSD)
+# Add Safe Shutdown Script (recommended for HDD)
 The Odroid manufacturer recommends applying the following script to park your hard drive for a safe shutdown. 
 
-If you are using an SSD instead of an HDD, this does not apply to you.
+If you are using an SSD instead of an HDD, this does **not** apply to you.
 
 As user *admin*:
 
@@ -314,7 +322,7 @@ Here's how you can permanently turn off the blinking blue LED:
 * Login as *admin* user.
 
 * Open the `/etc/rc.local` file using Nano editor.<br/>
-  `sudo nano /etc/rc.local` (as admin)
+  `sudo nano /etc/rc.local`
 
 * Paste this line before `exit 0`.<br/>
 
@@ -322,7 +330,7 @@ Here's how you can permanently turn off the blinking blue LED:
 echo none > /sys/class/leds/blue:heartbeat/trigger
 ```
 
-* Save & exit (Ctrl+X).
+* Save & close the file. (Ctrl+X)
 
 * Restart your odroid.
   `sudo shutdown -r now`

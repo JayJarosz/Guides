@@ -8,9 +8,10 @@ If you have any questions or feedback about this guide, you can message me on [e
 
 If you found this guide helpful, please consider donating some satoshis :)
 
-BTC: 3LtfxvMXcaEEFtnshdEcUY15BfRvtzVNbA
+* BTC: 3LtfxvMXcaEEFtnshdEcUY15BfRvtzVNbA
 
 You can also support me by using my referral links here:
 
 * [QuadrigaCX](https://www.quadrigacx.com/?ref=01quqw4ytv4vcjhkuvzhi0ng)
 * [Coinbase](https://www.coinbase.com/join/583a90629ef1db7895bb2913)
+* [Binance](https://www.binance.com/?ref=27850909)

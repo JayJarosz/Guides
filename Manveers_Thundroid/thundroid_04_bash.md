@@ -4,7 +4,9 @@
 ### Manveer's Expanded :zap:Thundroid:zap: Guide
 --------
 
-Since you'll be working on your Thundroid entirely via the shell prompt, it's worth decorating it a bit and installing some shortcuts. Note: Run all of the following commands as *admin* user.
+Since you'll be working on your Thundroid entirely via the shell prompt, it's worth decorating it a bit and installing some shortcuts. 
+
+Run all of the commands below as *admin* user (unless instructed otherwise).
 
 # Prettifying your Shell Prompt (optional)
 You can redesign your shell prompt for each user by enabling color output and setting a custom prompt.
@@ -16,7 +18,7 @@ We're going to make *root* user be red, *admin* user be green, and *bitcoin* use
 ### Admin user
 * Open *admin*'s .bashrc file inside of nano editor.<br/>
   `nano /home/admin/.bashrc`
-* Paste the following settings, then close and save using Ctrl+X (then 'y', then 'enter').
+* Paste the following settings in the file:
 
 ```
 # Enable color prompt
@@ -55,13 +57,14 @@ PS1="${DARK_GRAY}\t ${debian_chroot:+($debian_chroot)}${BOLD}${GREEN}\u ${BOLD}$
 # Set "ls" to always use the -la option
 alias ls='ls -la --color=always'
 ```
+* Save & close the file using Ctrl+X (then 'y', then 'enter').
 * Reload *admin*'s .bashrc file so that the changes take effect (or just wait until next login).<br/>
   `source /home/admin/.bashrc`
 
 ### Bitcoin user
-* Open *bitcoin*'s .bashrc file inside of nano editor (note: since we are editing bitcoin user's .bashrc file while being logged in as *admin* user, we need to add `sudo` to the command).<br/>
+* Open *bitcoin*'s .bashrc file inside of nano editor (note: since we are editing *bitcoin* user's .bashrc file while being logged in as *admin* user, we need to add `sudo` to the command).<br/>
   `sudo nano /home/bitcoin/.bashrc`
-* Paste the following settings, then close and save using Ctrl+X (then 'y', then 'enter').
+* Paste the following settings in the file:
 
 ```
 # Enable color prompt
@@ -92,6 +95,7 @@ PS1="${DARK_GRAY}\t ${debian_chroot:+($debian_chroot)}${BOLD}${YELLOW}\u ${BOLD}
 # Set "ls" to always use the -la option
 alias ls='ls -la --color=always'
 ```
+* Save & close the file (Ctrl+X).
 * Reload *bitcoin*'s .bashrc file so that the changes take effect (or just wait until next login)<br/>
   `source /home/bitcoin/.bashrc`
 
@@ -102,7 +106,7 @@ alias ls='ls -la --color=always'
   `mv /root/.bashrc /root/.bashrc-backup`
 * Create a new .bashrc file.</br>
   `nano /root/.bashrc`
-* Paste the following settings, then close and save using Ctrl+X (then 'y', then 'enter').
+* Paste the following settings in the file:
 
 ```
 # Enable color prompt
@@ -134,6 +138,7 @@ PS1="${DARK_GRAY}\t ${debian_chroot:+($debian_chroot)}${BOLD}${RED}\u ${BOLD}${B
 # Set "ls" to always use the -la option
 alias ls='ls -la --color=always'
 ```
+* Save & close the file (Ctrl+X).
 * Reload *root*'s .bashrc file so that the changes take effect (or just wait until next login)<br/>
   `source /root/.bashrc`
 
@@ -166,7 +171,7 @@ To fix this, proceed as follows:
 # Bash Completion (optional)
 There are bash completion scripts for Bitcoin Core and Lightning that allow you to complete commands by pressing the Tab key (e.g. `bitcoin-cli getblockch [Tab]` → `bitcoin-cli getblockchaininfo` ).
 
-As user *admin*:
+As *admin* user:
 
 * Go into your downloads directory.<br/>
   `cd /home/admin/downloads`
@@ -195,7 +200,7 @@ MOTD = Message Of The Day. When users login to their shell account on a Linux-ba
 
 ![System Overview MOTD - Dark](images/system-overview-motd-black.png)
 
-* As user *admin*, go into the **downloads** directory.<br/>
+* As *admin* user, go into the **downloads** directory.<br/>
   `cd /home/admin/downloads/`
 * Download Stadicus' system overview MOTD script.<br/>
   `wget https://gist.githubusercontent.com/Stadicus/ffbbd855d23cd068f7b739cae6440f4b/raw/ab2c97bd554c003b88f5e9a8793a047805d5e4b0/20-thundroid-welcome`

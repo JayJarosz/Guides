@@ -4,13 +4,13 @@
 ### Manveer's Expanded :zap:Thundroid:zap: Guide
 --------
 
-The base of the Lightning node is a fully trustless Bitcoin Core node. It keeps a complete copy of the blockchain and validates all transactions and blocks. By this ourselves, nobody else needs to be trusted.
+The foundation of the Lightning node is a fully trustless Bitcoin Core node. It keeps a complete copy of the blockchain and validates all transactions and blocks. By doing this ourselves, nobody else needs to be trusted.
 
 Note: LND has it's own wallet system; it does not use Bitcoin Core's (bitcoind's) wallet. So we will install Bitcoin Core (bitcoind) without a wallet.
 
 
 # Installation
-Be sure to be logged in as *admin*.
+As *admin* user:
 
 * Create a downloads directory (if you haven't already).<br/>
   `mkdir /home/admin/downloads`
@@ -25,19 +25,31 @@ Be sure to be logged in as *admin*.
 
 * Check that the reference checksum matches the real checksum. This is a precaution to make sure that this is an official release and not a malicious version trying to steal our money.<br/>
   `sha256sum --check SHA256SUMS.asc --ignore-missing`
-  * Expected output: "bitcoin-0.16.0-arm-linux-gnueabihf.tar.gz: OK"
+
+* Expected output:
+```
+bitcoin-0.16.0-arm-linux-gnueabihf.tar.gz: OK
+```
 
 * Manually check the fingerprint of the public key:<br/>
   `gpg --with-fingerprint ./laanwj-releases.asc`
-  * Expected output: "01EA 5486 DE18 A882 D4C2  6845 90C8 019E 36C2 E964"
+
+* Expected output:
+```
+01EA 5486 DE18 A882 D4C2  6845 90C8 019E 36C2 E964
+```
 
 * Import the public key of **Wladimir van der Laan**.<br/>
   `gpg --import ./laanwj-releases.asc`
 
 * Verify the signed checksum file and check the fingerprint again in case of malicious keys.<br/>
   `gpg --verify SHA256SUMS.asc`
-  * "gpg: Good signature from Wladimir"
-  * "Primary key fingerprint: 01EA 5486 DE18 A882 D4C2 6845 90C8 019E 36C2 E964"
+
+* Expected outputs:
+```
+gpg: Good signature from Wladimir
+Primary key fingerprint: 01EA 5486 DE18 A882 D4C2 6845 90C8 019E 36C2 E964
+```
 
 * Extract the Bitcoin Core binaries.<br/>
   `tar -xvf bitcoin-0.16.0-arm-linux-gnueabihf.tar.gz`
@@ -51,7 +63,11 @@ Be sure to be logged in as *admin*.
   
 * Check active version of the Bitcoin Core binaries.<br/>
   `bitcoind —version`
-  * Expected output: "Bitcoin Core Daemon version v0.16.0"
+
+* Expected output:
+```
+Bitcoin Core Daemon version v0.16.0
+```
 
 
 # Prepare Bitcoin Directory on External HDD/SSD
@@ -101,7 +117,7 @@ zmqpubrawblock=tcp://127.0.0.1:29000
 zmqpubrawtx=tcp://127.0.0.1:29000
 ```
 
-* Save and exit. (Ctrl+X)
+* Save & close the file. (Ctrl+X)
 
 
 # Auto-start bitcoind
@@ -140,7 +156,7 @@ RestartSec=30
 WantedBy=multi-user.target
 ```
 
-* Save and exit. (Ctrl+X)
+* Save & close the file. (Ctrl+X)
 
 * Enable the systemd unit file and start it manually.<br/>
   `sudo systemctl enable bitcoind`<br/>
@@ -200,7 +216,7 @@ If everything is running smoothly, this is the perfect time to familiarize yours
   * [Official PDF (free)](https://conferences.oreilly.com/oscon/oscon-or/public/content/mastering-bitcoin-second-edition)
   * [Official Github (free)](https://github.com/bitcoinbook/bitcoinbook)
 
-* For a thorough deep dive, check out [Learning Bitcoin from the Command Line(https://github.com/ChristopherA/Learning-Bitcoin-from-the-Command-Line/blob/master/README.md) by Christopher Allen.
+* For a thorough deep dive, check out [Learning Bitcoin from the Command Line](https://github.com/ChristopherA/Learning-Bitcoin-from-the-Command-Line/blob/master/README.md) by Christopher Allen.
 
 * Additional information: [bitcoin-cli reference](https://en.bitcoin.it/wiki/Original_Bitcoin_client/API_calls_list)
 
