@@ -15,3 +15,5 @@ You can also support me by using my referral links here:
 * [QuadrigaCX](https://www.quadrigacx.com/?ref=01quqw4ytv4vcjhkuvzhi0ng)
 * [Coinbase](https://www.coinbase.com/join/583a90629ef1db7895bb2913)
 * [Binance](https://www.binance.com/?ref=27850909)
+
+<a href="http://example.com/" target="_blank">example</a>
