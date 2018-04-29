@@ -8,7 +8,7 @@ If you have any questions or feedback about this guide, you can message me on [e
 
 If you found this guide helpful, please consider donating some satoshis :)
 
-* BTC: 3LtfxvMXcaEEFtnshdEcUY15BfRvtzVNbA
+* BTC: [3LtfxvMXcaEEFtnshdEcUY15BfRvtzVNbA](https://blockchain.info/address/3LtfxvMXcaEEFtnshdEcUY15BfRvtzVNbA)
 
 You can also support me by using my referral links here:
 
