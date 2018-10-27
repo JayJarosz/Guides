@@ -31,8 +31,8 @@ https://medium.com/@meeDamian/bitcoin-through-tor-on-rbp3-12d38a1506f
 * Add the Tor repository to `apt` by adding the following lines to **sources.list**:
 
 ```
-deb http://deb.torproject.org/torproject.org xenial main
-deb-src http://deb.torproject.org/torproject.org xenial main
+deb https://deb.torproject.org/torproject.org xenial main
+deb-src https://deb.torproject.org/torproject.org xenial main
 ```
 
 * Save & close the file. (Ctrl+X)
