@@ -226,19 +226,19 @@ Be sure to check for updates on a regular basis (or automate the process).
 ## Uninstalling Tor
 If you change your mind about running Tor, here's how you can remove it from Thundroid.
 
-* To remove just tor & tor-arm packages:
+* To remove just tor & tor-arm packages:<br/>
   `sudo apt-get remove tor tor-arm`
 
-* OR, to remove the tor & tor-arm packages AND any other dependant packages which are no longer needed:
+* OR, to remove the tor & tor-arm packages AND any other dependant packages which are no longer needed:<br/>
   `sudo apt-get remove --auto-remove tor tor-arm`
 
-* Remove the Tor repository from `apt` by removing torproject.org references from **sources.list**:
+* Remove the Tor repository from `apt` by removing torproject.org references from **sources.list**:<br/>
   `sudo nano /etc/apt/sources.list`
 
 Optional: Purging
 
-* To delete configuration and/or data files of tor & tor-arm:
+* To delete configuration and/or data files of tor & tor-arm:<br/>
   `sudo apt-get purge tor tor-arm`
 
-* Or, to delete configuration and/or data files of tor & tor-arm AND their dependencies:
+* Or, to delete configuration and/or data files of tor & tor-arm AND their dependencies:<br/>
   `sudo apt-get purge --auto-remove tor`
