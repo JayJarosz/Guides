@@ -3,3 +3,5 @@
 --------
 ### Manveer's Expanded :zap:Thundroid:zap: Guide
 --------
+
+See https://github.com/mably/lncli-web
