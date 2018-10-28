@@ -132,7 +132,7 @@ LND="\342\232\241" # UTF-8 octal code for Lightning symbol (U+26A1)
 SKULL="\342\230\240" # UTF-8 octal code for Skull & Bones symbol (U+2620)
 
 # Prompt design
-PS1="${DARK_GRAY}\t ${debian_chroot:+($debian_chroot)}${BOLD}${RED}\u ${BOLD}${BLUE}\w ${RESET}${RED}${SKULL} ${RESET}"
+PS1="${DARK_GRAY}\t ${debian_chroot:+($debian_chroot)}${BOLD}${RED}\u ${BOLD}${BLUE}\w ${RESET}${RED}${SKULL}  ${RESET}"
 
 # Aliases
 # Set "ls" to always use the -la option
