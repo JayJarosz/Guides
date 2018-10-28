@@ -240,5 +240,5 @@ Optional: Purging
 * To delete configuration and/or data files of tor & tor-arm:<br/>
   `sudo apt-get purge tor tor-arm`
 
-* Or, to delete configuration and/or data files of tor & tor-arm AND their dependencies:<br/>
-  `sudo apt-get purge --auto-remove tor`
+* OR, to delete configuration and/or data files of tor & tor-arm AND their dependencies:<br/>
+  `sudo apt-get purge --auto-remove tor tor-arm`
