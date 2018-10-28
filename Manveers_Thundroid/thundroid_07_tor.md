@@ -232,7 +232,7 @@ If you change your mind about running Tor, here's how you can remove it from Thu
 * OR, to remove the tor & tor-arm packages AND any other dependant packages which are no longer needed:<br/>
   `sudo apt-get remove --auto-remove tor tor-arm`
 
-* Remove the Tor repository from `apt` by removing torproject.org references from **sources.list**:<br/>
+* Remove the Tor repository from `apt` by removing *torproject.org* references from **sources.list**:<br/>
   `sudo nano /etc/apt/sources.list`
 
 Optional: Purging
