@@ -12,9 +12,10 @@ Then one day I saw Stadicus' article on Medium: ["The perfect Bitcoin Lightning 
 
 While Stadicus' guide was a great starting point, 
 
-* I quickly ran into issues not mentioned in the guide that had me stumpted for a while. 
-* I found myself wanting more explanations for the commands we were running.
-* I didn't like jumping between the [Thundroid guide](https://medium.com/@stadicus/perfect-low-cost-%EF%B8%8Flightning%EF%B8%8F-node-4c2f42a4ff7b) and the [RaspiBolt guide](https://github.com/Stadicus/guides/tree/master/raspibolt) to get the full(er) picture.
+* I found myself craving explanations for the commands we were running (thank you Stackoverflow community for all the answers!).
+* I quickly ran into technical issues not mentioned in the guide that had me stumpted for a while.
+* I found that Stadicus is unfortunately short-tempered and not very helpful. When I emailed him a question about an issue with his script, he didn't respond for two days. I followed up with "Hello?". He responded with "Blocked".
+* I found that the [Thundroid guide](https://medium.com/@stadicus/perfect-low-cost-%EF%B8%8Flightning%EF%B8%8F-node-4c2f42a4ff7b) was not as complete as the [RaspiBolt guide](https://github.com/Stadicus/guides/tree/master/raspibolt).
 * I wanted to skip the testnet and jump right into the mainnet.
 * I wanted to install Bitcoin's blockchain directly from my node (my laptop doesn't have enough space).
 * I wanted to make tweaks to Stadicus' customizations (especially in Bash).
