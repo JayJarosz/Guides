@@ -125,7 +125,7 @@ To do this, you'll need to backup an image of your current MicroSD card and then
 * Power on your Thundroid and then login as *admin* via SSH (as always).
 * Switch to root.<br/>
   `su -`
-* Install parted.<br/>
+* Install parted using apt (Advanced Packaging Tool).<br/>
   `sudo apt-get install parted`
 * Run parted.<br/>
   `parted`
