@@ -242,24 +242,40 @@ On your Thundroid:
 Worst case scenario: you'll need to flash the MicroSD card and set up the system again. But luckily all important stuff is on the HDD/SSD and won't be affected :)
 
 
-# Connect to your Odroid outside of your home network (optional)
-You may want or need to work on your Odroid when you are away from your home network/router. In order to do this, you'll need to keep track of your router's public IP address and open port 22 for SSH. Be aware though that this exposes your Odroid to more attackers.
+# Add Auto-Update Script
 
-* On your router, open Port 22. Refer back to the "Port Forwarding" instructions in the Network page if you need to.
-  * Service type: `SSH`
-  * External & internal port: `22`
-  * Protocol: `TCP`
-  * Internal IP: same as before (the fixed IP we set for our Odroid)
+To keep our system secure and bug-free, we need to make sure that our Ubuntu packages are regularly updated.
 
-* On your Odroid, as *root* user, open Port 22. Refer back to the "Uncomplicated FireWall" instructions on this page if you need to.<br/>
-  `ufw allow 22 comment 'allow SSH from anywhere'`
+We're going to create an update script and have it automatically run every week.
 
-* You can now login to your Odroid from anywhere in the world. Just replace the `ROUTER_EXTERNAL_IP` and `SSH_KEY_LOCATION` values in the following command.<br/>
-  `ssh admin@ROUTER_EXTERNAL_IP -i SSH_KEY_LOCATION`
+* Login to *root* user.<br/>
+  `sudo su`
 
-This is not much different from before. Instead of using our Odroid's internal IP, we are now just using our Router's external IP.
+* Create an `auto-update` file using Nano editor in the `cron.weekly` folder.<br/>
+  `nano /etc/cron.weekly/auto-update`
 
-Note: the external IP of a your home network/router can change from time to time. So if suddenly you can no longer login using the above command, you might just need to update the external IP in the command. I personally love TP-link routers because they have a mobile app from which you can see up-to-date stats on your home router (like it's current external IP) from anywhere in the world.
+* Paste the following instructions:<br/>
+
+```
+#!/bin/bash
+apt update
+apt upgrade -y
+apt autoclean
+```
+* Save & close the file. (Ctrl+X)
+
+* Make the file executable in order for cron to be able to run it. `chmod 755` sets **rwxr-xr-x** permissions.<br/>
+  `chmod 755 /etc/cron.weekly/auto-update`
+
+* Logout from *root* (Ctrl+D).
+
+You are finished :) The cron job will run weekly and:
+
+* update your source list (to see if there are any new package updates), 
+* update your packages as found and needed, and
+* clean out any old unused packages no longer installed after updating. 
+
+You can still update manually, but now you can relax a bit knowing your system will be updated automatically on a weekly basis.
 
 
 # Add Safe Shutdown Script (recommended for HDD)
@@ -312,6 +328,26 @@ esac
 
 * Install the script.<br/>
   `sudo install -o root -g root -m 0755 ./odroid.shutdown /lib/systemd/system-shutdown/odroid.shutdown`
+
+
+# Connect to your Odroid outside of your home network (optional)
+You may want or need to work on your Odroid when you are away from your home network/router. In order to do this, you'll need to keep track of your router's public IP address and open port 22 for SSH. Be aware though that this exposes your Odroid to more attackers.
+
+* On your router, open Port 22. Refer back to the "Port Forwarding" instructions in the Network page if you need to.
+  * Service type: `SSH`
+  * External & internal port: `22`
+  * Protocol: `TCP`
+  * Internal IP: same as before (the fixed IP we set for our Odroid)
+
+* On your Odroid, as *root* user, open Port 22. Refer back to the "Uncomplicated FireWall" instructions on this page if you need to.<br/>
+  `ufw allow 22 comment 'allow SSH from anywhere'`
+
+* You can now login to your Odroid from anywhere in the world. Just replace the `ROUTER_EXTERNAL_IP` and `SSH_KEY_LOCATION` values in the following command.<br/>
+  `ssh admin@ROUTER_EXTERNAL_IP -i SSH_KEY_LOCATION`
+
+This is not much different from before. Instead of using our Odroid's internal IP, we are now just using our Router's external IP.
+
+Note: the external IP of a your home network/router can change from time to time. So if suddenly you can no longer login using the above command, you might just need to update the external IP in the command. I personally love TP-link routers because they have a mobile app from which you can see up-to-date stats on your home router (like it's current external IP) from anywhere in the world.
 
 
 # LED Settings (optional)
