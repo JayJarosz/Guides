@@ -243,7 +243,7 @@ Worst case scenario: you'll need to flash the MicroSD card and set up the system
 
 
 # Auto-Update
-To keep our system secure and bug-free, we need to make sure that our Ubuntu packages are regularly updated.
+To keep your system secure and bug-free, you need to make sure that your Ubuntu packages are regularly updated.
 
 We're going to create an update script and have it automatically run every week.
 
@@ -272,7 +272,7 @@ You are finished :) The cron job will run weekly and:
 * update your packages as found and needed, and
 * clean out any old unused packages no longer installed after updating. 
 
-You can still update manually, but now you can relax a bit knowing your system will be updated automatically on a weekly basis.
+⚠️ Note: you'll still need to manually update your Bitcoin Core and LND clients.
 
 ### Bonus: Auto-Update w/ IFTTT Notification
 If you want to be notified when your system is updated and whether it was successful or not, use this script instead of the one above.
@@ -284,7 +284,7 @@ For notifications, you'll need an [IFTTT Webhooks key](https://ifttt.com/maker_w
 * Subject: `Thundroid update was {{Value1}}`
 * Body: blank
 
-As *root* user:
+Then as *root* user:
 
 * Remove the previous `auto-update` file.<br/>
   `rm /etc/cron.weekly/auto-update`
