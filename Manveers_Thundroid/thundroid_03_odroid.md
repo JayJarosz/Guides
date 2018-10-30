@@ -275,11 +275,9 @@ You are finished :) The cron job will run weekly and:
 You can still update manually, but now you can relax a bit knowing your system will be updated automatically on a weekly basis.
 
 ### Bonus: Auto-Update w/ IFTTT Notification
-If you want to be notified when your system is updated and whether if was success or not, use this script instead of the one above.
+If you want to be notified when your system is updated and whether it was successful or not, use this script instead of the one above.
 
-Note: you'll need an [IFTTT Webhooks key](https://ifttt.com/maker_webhooks).
-
-IFTTT Applet setup:
+For notifications, you'll need an [IFTTT Webhooks key](https://ifttt.com/maker_webhooks) and the following IFTTT Applet setup:
 
 * If Maker Event "thundroid_updated", then Send me an email at example@example.com
 * Event name: `thundroid_updated`
@@ -292,7 +290,7 @@ As *root* user:
   `rm /etc/cron.weekly/auto-update`
 * Create an `autoupdate.sh` file using Nano editor in the `cron.weekly` folder.<br/>
   `nano /etc/cron.weekly/autoupdate.sh`
-* Paste the following script:<br/>
+* Paste the following script AND add your webhooks key!<br/>
 
 ```
 # This script will update your Ubuntu system every week,
@@ -334,7 +332,9 @@ rm -f ${updatelog}
 * Logout from *root* (Ctrl+D).
 
 
-# Add Safe Shutdown Script (recommended for HDD)
+# Extras
+
+### Add Safe Shutdown Script (recommended for HDD)
 The Odroid manufacturer recommends applying the following script to park your hard drive for a safe shutdown. 
 
 If you are using an SSD instead of an HDD, this does **not** apply to you.
@@ -383,7 +383,7 @@ esac
   `sudo install -o root -g root -m 0755 ./odroid.shutdown /lib/systemd/system-shutdown/odroid.shutdown`
 
 
-# Connect to your Odroid outside of your home network (optional)
+### Connect to your Odroid outside of your home network (optional)
 You may want or need to work on your Odroid when you are away from your home network/router. In order to do this, you'll need to keep track of your router's public IP address and open port 22 for SSH. Be aware though that this exposes your Odroid to more attackers.
 
 * On your router, open Port 22. Refer back to the "Port Forwarding" instructions in the Network page if you need to.
@@ -403,7 +403,7 @@ This is not much different from before. Instead of using our Odroid's internal I
 Note: the external IP of a your home network/router can change from time to time. So if suddenly you can no longer login using the above command, you might just need to update the external IP in the command. I personally love TP-link routers because they have a mobile app from which you can see up-to-date stats on your home router (like it's current external IP) from anywhere in the world.
 
 
-# LED Settings (optional)
+### LED Settings (optional)
 The Odroid has a very bright blue blinking LED that will light up your ceiling. If you keep your Odroid in your bedroom, this can be very annoying at night when you're trying to fall asleep.
 
 Here's how you can permanently turn off the blinking blue LED:
