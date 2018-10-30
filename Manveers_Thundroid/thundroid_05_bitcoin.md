@@ -203,12 +203,14 @@ After rebooting, bitcoind should start and begin to sync and validate the Bitcoi
 * Open session with *bitcoin* user.<br/>
   `sudo su bitcoin`
 
-* Check the status of the bitcoin daemon that was started by systemd. (exit with Ctrl-C)<br/>
+* Check the status of the bitcoin daemon that was started by systemd.<br/>
   `systemctl status bitcoind` 
+* Exit with Ctrl+C.
 
-* See bitcoind in action by monitoring its log file. (exit with Ctrl-C)<br/>
+* See bitcoind in action by monitoring its log file.<br/>
   `tail -f /home/bitcoin/.bitcoin/debug.log` (mainnet)<br/>
   `tail -f /home/bitcoin/.bitcoin/testnet3/debug.log` (testnet)
+* Exit with Ctrl+C.
 
 * Use the Bitcoin Core client `bitcoin-cli` to get information about the current blockchain and its verification (download) progress.<br/>
   `bitcoin-cli getblockchaininfo`
@@ -245,5 +247,6 @@ If everything is running smoothly, this is the perfect time to familiarize yours
 
 * Additional information: [bitcoin-cli reference](https://en.bitcoin.it/wiki/Original_Bitcoin_client/API_calls_list)
 
+<hr/>
 
 Once the Bitcoin blockchain is synced on your node, Lightning can be set up.
