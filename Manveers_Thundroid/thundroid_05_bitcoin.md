@@ -9,28 +9,38 @@ The foundation of the Lightning node is a fully trustless Bitcoin Core node. It 
 Note: LND has it's own wallet system; it does not use Bitcoin Core's (bitcoind's) wallet. So we will install Bitcoin Core (bitcoind) without a wallet.
 
 
-# Installation
+# Installing/Updating Bitcoin Core 
 As *admin* user:
 
 * Create a downloads directory (if you haven't already).<br/>
   `mkdir /home/admin/downloads`
-
 * Enter the downloads directory.<br/>
-  `cd downloads`
+  `cd /home/admin/downloads`
 
-* Download the latest Bitcoin Core ARM binaries directly from bitcoin.org (check https://bitcoin.org/en/download).<br/>
-  `wget https://bitcoin.org/bin/bitcoin-core-0.16.0/bitcoin-0.16.0-arm-linux-gnueabihf.tar.gz`<br/>
-  `wget https://bitcoin.org/bin/bitcoin-core-0.16.0/SHA256SUMS.asc`<br/>
+
+### Get download links
+Get download links for Bitcoin Core directly from https://bitcoin.org/en/download
+
+* Right-click > Copy Link Address on "ARM Linux".
+```
+https://bitcoin.org/bin/bitcoin-core-0.17.0/bitcoin-0.17.0-arm-linux-gnueabihf.tar.gz
+```
+
+* Right-click > Copy Link Address on "Verify release signatures".
+```
+https://bitcoin.org/bin/bitcoin-core-0.17.0/SHA256SUMS.asc
+```
+
+* Right-click > Copy Link Address on "Release Signing Keys" > "v0.11.0+".
+```
+https://bitcoin.org/laanwj-releases.asc
+```
+
+### Import Signing Keys
+You can skip this section if you're just updating and the signing keys haven't changed for the newest version.
+
+* Download signing keys.<br/>
   `wget https://bitcoin.org/laanwj-releases.asc`
-
-* Check that the reference checksum matches the real checksum. This is a precaution to make sure that this is an official release and not a malicious version trying to steal our money.<br/>
-  `sha256sum --check SHA256SUMS.asc --ignore-missing`
-
-* Expected output:
-```
-bitcoin-0.16.0-arm-linux-gnueabihf.tar.gz: OK
-```
-
 * Manually check the fingerprint of the public key:<br/>
   `gpg --with-fingerprint ./laanwj-releases.asc`
 
@@ -42,6 +52,24 @@ bitcoin-0.16.0-arm-linux-gnueabihf.tar.gz: OK
 * Import the public key of **Wladimir van der Laan**.<br/>
   `gpg --import ./laanwj-releases.asc`
 
+
+### Download, verify, and install
+
+* Remove old checksums (if updating).<br/>
+  `rm SHA256SUMS.asc`
+
+* Download the latest Bitcoin Core ARM binaries using the links found directly from [bitcoin.org](https://bitcoin.org/en/download).<br/>
+  `wget https://bitcoin.org/bin/bitcoin-core-0.17.0/bitcoin-0.17.0-arm-linux-gnueabihf.tar.gz`<br/>
+  `wget https://bitcoin.org/bin/bitcoin-core-0.17.0/SHA256SUMS.asc`
+
+* Check that the reference checksum matches the real checksum. This is a precaution to make sure that this is an official release and not a malicious version trying to steal our money.<br/>
+  `sha256sum --check SHA256SUMS.asc --ignore-missing`
+
+* Expected output:
+```
+bitcoin-0.17.0-arm-linux-gnueabihf.tar.gz: OK
+```
+
 * Verify the signed checksum file and check the fingerprint again in case of malicious keys.<br/>
   `gpg --verify SHA256SUMS.asc`
 
@@ -52,25 +80,28 @@ Primary key fingerprint: 01EA 5486 DE18 A882 D4C2 6845 90C8 019E 36C2 E964
 ```
 
 * Extract the Bitcoin Core binaries.<br/>
-  `tar -xvf bitcoin-0.16.0-arm-linux-gnueabihf.tar.gz`
+  `tar -xvf bitcoin-0.17.0-arm-linux-gnueabihf.tar.gz`
   * `tar` is used to extract archives
   * `-x` = extract 
   * `-v` = verbosely list files processed
   * `-f` = use a file (the file you are uncompressing)
 
 * Install the Bitcoin Core binaries.<br/>
-  `sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-0.16.0/bin/*`
+  `sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-0.17.0/bin/*`
   
 * Check active version of the Bitcoin Core binaries.<br/>
-  `bitcoind —version`
+  `bitcoind -version`
 
 * Expected output:
 ```
-Bitcoin Core Daemon version v0.16.0
+Bitcoin Core Daemon version v0.17.0
 ```
 
 
-# Prepare Bitcoin Directory on External HDD/SSD
+# Initial Setup
+You only have to do this once.
+
+### Prepare Bitcoin Directory on External HDD/SSD
 
 * Open session with *bitcoin* user.<br/>
   `sudo su bitcoin`
@@ -92,7 +123,7 @@ Bitcoin Core Daemon version v0.16.0
 ![HDD Symbolic Link](images/hdd-symbolic-link-highlighted.png)
 
 
-# Configuration
+### Configuration
 
 * Create the configuration file for bitcoind.<br/>
   `nano /home/bitcoin/.bitcoin/bitcoin.conf`
@@ -120,7 +151,7 @@ zmqpubrawtx=tcp://127.0.0.1:29000
 * Save & close the file. (Ctrl+X)
 
 
-# Auto-start bitcoind
+### Auto-start bitcoind
 
 * Exit *bitcoin* user session and return to *admin* user.<br/>
   `exit` (or Ctrl+D)
@@ -166,7 +197,9 @@ WantedBy=multi-user.target
   `sudo shutdown -r now`
 
 
-# Verify Bitcoind Operations
+# Verify 
+
+### Verify Bitcoind Operations
 
 After rebooting, bitcoind should start and begin to sync and validate the Bitcoin blockchain.<br/>
 
@@ -188,7 +221,7 @@ After rebooting, bitcoind should start and begin to sync and validate the Bitcoi
   * Once the “verificationprogress” value reaches almost 1 (0.999…), the blockchain is up-to-date and fully validated.
 
 
-# Verify Public Visiblility
+### Verify Public Visiblility
 Now that your Bitcoin node is running, let's check if the public can actually see and connect to it.
 
 * Check public visibility.<br/>
@@ -196,7 +229,6 @@ Now that your Bitcoin node is running, let's check if the public can actually se
   `curl -sL https://bitnodes.earn.com/api/v1/nodes/me-18333/ | jq` (testnet)
 
 * Expected output:
-
 ```
 {
   "success": true
