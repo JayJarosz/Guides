@@ -9,7 +9,7 @@ The foundation of the Lightning node is a fully trustless Bitcoin Core node. It 
 Note: LND has it's own wallet system; it does not use Bitcoin Core's (bitcoind's) wallet. So we will install Bitcoin Core (bitcoind) without a wallet.
 
 
-# Installing/Updating Bitcoin Core 
+# Install/Update Bitcoin Core 
 As *admin* user:
 
 * Create a downloads directory (if you haven't already).<br/>
@@ -46,7 +46,6 @@ You can skip this section if you're just updating and the signing keys haven't c
 ```
 * Import the public key of **Wladimir van der Laan**.<br/>
   `gpg --import ./laanwj-releases.asc`
-
 
 ### Download, verify, and install
 
@@ -122,7 +121,6 @@ You only have to do this once.
 
 ![HDD Symbolic Link](images/hdd-symbolic-link-highlighted.png)
 
-
 ### Configuration
 
 * Create the configuration file for bitcoind.<br/>
@@ -148,7 +146,6 @@ zmqpubrawtx=tcp://127.0.0.1:29000
 ```
 
 * Save & close the file. (Ctrl+X)
-
 
 ### Auto-start bitcoind
 
@@ -192,10 +189,9 @@ WantedBy=multi-user.target
   `sudo shutdown -r now`
 
 
-# Verify 
+# Check if it's working
 
 ### Verify Bitcoind Operations
-
 After rebooting, bitcoind should start and begin to sync and validate the Bitcoin blockchain.<br/>
 
 * Wait a bit, then reconnect via SSH as *admin* user (as always).
@@ -216,7 +212,6 @@ After rebooting, bitcoind should start and begin to sync and validate the Bitcoi
   `bitcoin-cli getblockchaininfo`
   * NOTE: Only *bitcoin* user can use `bitcoin-cli`.
   * Once the “verificationprogress” value reaches almost 1 (0.999…), the blockchain is up-to-date and fully validated.
-
 
 ### Verify Public Visiblility
 Now that your Bitcoin node is running, let's check if the public can actually see and connect to it.
@@ -249,4 +244,4 @@ If everything is running smoothly, this is the perfect time to familiarize yours
 
 <hr/>
 
-Once the Bitcoin blockchain is synced on your node, Lightning can be set up.
+Once the Bitcoin blockchain is synced on your node, [Lightning can be set up](thundroid_06_lnd.md).
