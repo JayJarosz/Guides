@@ -17,7 +17,6 @@ As *admin* user:
 * Enter the downloads directory.<br/>
   `cd /home/admin/downloads`
 
-
 ### Get download links
 Get download links for Bitcoin Core directly from https://bitcoin.org/en/download
 
@@ -25,12 +24,10 @@ Get download links for Bitcoin Core directly from https://bitcoin.org/en/downloa
 ```
 https://bitcoin.org/bin/bitcoin-core-0.17.0/bitcoin-0.17.0-arm-linux-gnueabihf.tar.gz
 ```
-
 * Right-click > Copy Link Address on "Verify release signatures".
 ```
 https://bitcoin.org/bin/bitcoin-core-0.17.0/SHA256SUMS.asc
 ```
-
 * Right-click > Copy Link Address on "Release Signing Keys" > "v0.11.0+".
 ```
 https://bitcoin.org/laanwj-releases.asc
@@ -43,12 +40,10 @@ You can skip this section if you're just updating and the signing keys haven't c
   `wget https://bitcoin.org/laanwj-releases.asc`
 * Manually check the fingerprint of the public key:<br/>
   `gpg --with-fingerprint ./laanwj-releases.asc`
-
 * Expected output:
 ```
 01EA 5486 DE18 A882 D4C2  6845 90C8 019E 36C2 E964
 ```
-
 * Import the public key of **Wladimir van der Laan**.<br/>
   `gpg --import ./laanwj-releases.asc`
 
@@ -64,7 +59,6 @@ You can skip this section if you're just updating and the signing keys haven't c
 
 * Check that the reference checksum matches the real checksum. This is a precaution to make sure that this is an official release and not a malicious version trying to steal our money.<br/>
   `sha256sum --check SHA256SUMS.asc --ignore-missing`
-
 * Expected output:
 ```
 bitcoin-0.17.0-arm-linux-gnueabihf.tar.gz: OK
@@ -72,7 +66,6 @@ bitcoin-0.17.0-arm-linux-gnueabihf.tar.gz: OK
 
 * Verify the signed checksum file and check the fingerprint again in case of malicious keys.<br/>
   `gpg --verify SHA256SUMS.asc`
-
 * Expected outputs:
 ```
 gpg: Good signature from Wladimir
@@ -88,10 +81,8 @@ Primary key fingerprint: 01EA 5486 DE18 A882 D4C2 6845 90C8 019E 36C2 E964
 
 * Install the Bitcoin Core binaries.<br/>
   `sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-0.17.0/bin/*`
-  
 * Check active version of the Bitcoin Core binaries.<br/>
   `bitcoind -version`
-
 * Expected output:
 ```
 Bitcoin Core Daemon version v0.17.0
@@ -127,7 +118,6 @@ You only have to do this once.
 
 * Create the configuration file for bitcoind.<br/>
   `nano /home/bitcoin/.bitcoin/bitcoin.conf`
-
 * Paste the configuration below and replace PASSWORD_[C] with your password.
 
 ```
@@ -155,10 +145,8 @@ zmqpubrawtx=tcp://127.0.0.1:29000
 
 * Exit *bitcoin* user session and return to *admin* user.<br/>
   `exit` (or Ctrl+D)
-
 * Create the configuration file for bitcoind.service.<br/>
   `sudo nano /etc/systemd/system/bitcoind.service`
-
 * Paste the configuration below:
 
 ```
@@ -188,11 +176,9 @@ WantedBy=multi-user.target
 ```
 
 * Save & close the file. (Ctrl+X)
-
 * Enable the systemd unit file and start it manually.<br/>
   `sudo systemctl enable bitcoind`<br/>
   `sudo systemctl start bitcoind`
-
 * Restart your Thundroid.<br/>
   `sudo shutdown -r now`
 
@@ -227,14 +213,12 @@ Now that your Bitcoin node is running, let's check if the public can actually se
 * Check public visibility.<br/>
   `curl -sL https://bitnodes.earn.com/api/v1/nodes/me-8333/ | jq` (mainnet)<br/>
   `curl -sL https://bitnodes.earn.com/api/v1/nodes/me-18333/ | jq` (testnet)
-
 * Expected output:
 ```
 {
   "success": true
 }
 ```
-
 * If you are getting a `false` result: 
   * Go back to the [Network](thundroid_02_network.md) section and make sure your router has port forwarding properly configured.
   * Go back to the [Odroid](thundroid_03_odroid.md) section and make sure your Uncomplicated FireWall (UFW) has the right rules in place.
