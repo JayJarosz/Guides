@@ -242,18 +242,15 @@ On your Thundroid:
 Worst case scenario: you'll need to flash the MicroSD card and set up the system again. But luckily all important stuff is on the HDD/SSD and won't be affected :)
 
 
-# Add Auto-Update Script
-
+# Auto-Update
 To keep our system secure and bug-free, we need to make sure that our Ubuntu packages are regularly updated.
 
 We're going to create an update script and have it automatically run every week.
 
-* Login to *root* user.<br/>
+* Change session to *root* user.<br/>
   `sudo su`
-
 * Create an `auto-update` file using Nano editor in the `cron.weekly` folder.<br/>
   `nano /etc/cron.weekly/auto-update`
-
 * Paste the following instructions:<br/>
 
 ```
@@ -263,10 +260,10 @@ apt upgrade -y
 apt autoclean
 ```
 * Save & close the file. (Ctrl+X)
-
-* Make the file executable in order for cron to be able to run it. `chmod 755` sets **rwxr-xr-x** permissions.<br/>
+* Make the file executable in order for cron to be able to run it.<br/>
   `chmod 755 /etc/cron.weekly/auto-update`
-
+  * `chmod` sets file permissions.
+  * `755` means full permissions for the owner (rwx) and read and execute permission for others (rx).
 * Logout from *root* (Ctrl+D).
 
 You are finished :) The cron job will run weekly and:
@@ -276,6 +273,65 @@ You are finished :) The cron job will run weekly and:
 * clean out any old unused packages no longer installed after updating. 
 
 You can still update manually, but now you can relax a bit knowing your system will be updated automatically on a weekly basis.
+
+### Bonus: Auto-Update w/ IFTTT Notification
+If you want to be notified when your system is updated and whether if was success or not, use this script instead of the one above.
+
+Note: you'll need an [IFTTT Webhooks key](https://ifttt.com/maker_webhooks).
+
+IFTTT Applet setup:
+
+* If Maker Event "thundroid_updated", then Send me an email at example@example.com
+* Event name: `thundroid_updated`
+* Subject: `Thundroid update was {{Value1}}`
+* Body: blank
+
+As *root* user:
+
+* Remove the previous `auto-update` file.<br/>
+  `rm /etc/cron.weekly/auto-update`
+* Create an `autoupdate.sh` file using Nano editor in the `cron.weekly` folder.<br/>
+  `nano /etc/cron.weekly/autoupdate.sh`
+* Paste the following script:<br/>
+
+```
+# This script will update your Ubuntu system every week,
+# and informs you via IFTTT webhooks if the update was successful or not. 
+# Place this script in /etc/cron.weekly/autoupdate.sh
+
+# Set the variable for your IFTTT webhooks key.
+webhooks_key="paste_your_key_here"
+
+# Create a temporary path in /tmp to write a temporary log file. No need to edit.
+updatelog=$(mktemp)
+
+# Run the commands to update the system and write the log file at the same time.
+echo "apt update" >> ${updatelog}
+apt update >> ${updatelog} 2>&1
+echo "" >> ${updatelog}
+echo "apt upgrade" >> ${updatelog}
+apt upgrade -y >> ${updatelog} 2>&1
+echo "" >> ${updatelog}
+echo "apt autoclean" >> ${updatelog}
+apt autoclean >> ${updatelog} 2>&1
+
+# Make IFTTT post call to give status of the update.
+if grep -q 'E: \|W: ' ${updatelog} ; then
+        curl --data "value1=FAIL" https://maker.ifttt.com/trigger/thundroid_updated/with/key/${webhooks_key}/
+else
+        curl --data "value1=successful ⚡" https://maker.ifttt.com/trigger/thundroid_updated/with/key/${webhooks_key}/
+fi
+
+# Remove the temporary log file in temporary path.
+rm -f ${updatelog}
+```
+
+* Save & close the file. (Ctrl+X)
+* Give `autoupdate.sh` execution privileges.<br/>
+  `chmod 755 /etc/cron.weekly/autoupdate.sh`
+* Run the script to see if it works. It may take a minute or two.<br/>
+  `/etc/cron.weekly/autoupdate.sh`
+* Logout from *root* (Ctrl+D).
 
 
 # Add Safe Shutdown Script (recommended for HDD)
@@ -287,13 +343,10 @@ As user *admin*:
 
 * Create a downloads directory (if you haven't already).<br/>
   `mkdir /home/admin/downloads`
-
 * Enter the downloads directory.<br/>
   `cd downloads`
-
 * Download the Safe Shutdown script.<br/>
   `wget https://dn.odroid.com/5422/script/odroid.shutdown`
-
 * Check the contents of the script (it should look like what's shown below).<br/>
   `cat odroid.shutdown`
 
@@ -356,10 +409,8 @@ The Odroid has a very bright blue blinking LED that will light up your ceiling. 
 Here's how you can permanently turn off the blinking blue LED:
 
 * Login as *admin* user.
-
 * Open the `/etc/rc.local` file using Nano editor.<br/>
   `sudo nano /etc/rc.local`
-
 * Paste this line before `exit 0`.<br/>
 
 ```
@@ -367,16 +418,14 @@ echo none > /sys/class/leds/blue:heartbeat/trigger
 ```
 
 * Save & close the file. (Ctrl+X)
-
-* Restart your odroid.
+* Restart your odroid.<br/>
   `sudo shutdown -r now`
 
 <br/>
 If you want to learn more about how LEDs work on Odroid, here are some useful commands. 
 
-* Switch to *root* user. It's needed to change LED settings like `trigger`. (Using `sudo` as *admin* doesn't work).
+* Switch to *root* user. It's needed to change LED settings like `trigger`. (Using `sudo` as *admin* doesn't work).<br/>
   `su -`
-
 * View a list of LEDs on your Odroid.<br/>
   `cd /sys/class/leds`<br/>
   `ls`<br/>
@@ -387,7 +436,6 @@ If you want to learn more about how LEDs work on Odroid, here are some useful co
 
 * Change into the directory that represents the blue LED.<br/>
   `cd /sys/class/leds/blue:heartbeat`
-
 * View a list of all supported LED modes (for the LED whose directory you're in), and the LED mode that is currently used [heartbeat].<br/>
   `cat trigger`
 
@@ -398,10 +446,8 @@ none rc-feedback kbd-scrolllock kbd-numlock kbd-capslock kbd-kanalock kbd-shiftl
 * LED modes explained:
   * **heartbeat**: The default mode. It blinks like a heartbeat when the kernel is active. The frequency of the beat depends on CPU load.
   * **none**: Deactivates the LED completly.
-
 * Change LED mode.<br/>
   `echo [name of LED mode] > trigger`
-
 * If you want to make any `trigger` settings permanent, you have to include them in the `/etc/rc.local` file. 
 
 Note: the HC1/HC2's blue LED does not appear to have many customization options. For example, if you run `ls` inside the `/sys/class/leds/blue:heartbeat` directory, you won't see `delay_on` and `delay_off` options. Also, `max_brightness` is not editable, and `trigger` is missing some common options like `torch`. 
