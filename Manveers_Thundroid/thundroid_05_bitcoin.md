@@ -88,6 +88,15 @@ Primary key fingerprint: 01EA 5486 DE18 A882 D4C2 6845 90C8 019E 36C2 E964
 Bitcoin Core Daemon version v0.17.0
 ```
 
+### Stay up-to-date
+Be sure to get notified of any new [Bitcoin Core releases](https://bitcoin.org/en/version-history).
+
+There are many ways you can do this. I personally use [IFTTT](https://ifttt.com/discover) to automatically keep an eye on Bitcoin Core's RSS feed and then have IFTTT email me if/when there are any new releases.
+
+My IFTTT Applet setup:
+
+* If New feed item from https://bitcoin.org/en/rss/releases.rss, then Send me an email at example@example.com
+
 
 # Initial Setup
 You only have to do this once.
