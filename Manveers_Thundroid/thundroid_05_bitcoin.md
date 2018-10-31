@@ -130,21 +130,21 @@ As *bitcoin* user:
 * Paste the configuration below and replace PASSWORD_[C] with your password.
 
 ```
-# bitcoind configuration for Thundroid
+# Thundroid: bitcoind configuration
 # /home/bitcoin/.bitcoin/bitcoin.conf
 
 # Bitcoind options
 server=1
 daemon=1
 txindex=1
-disablewallet=1 # No wallet needs to be created, as LND does not require the Bitcoin Core wallet.
-#testnet=1 # Comment out this line to enable Bitcoin mainnet.
+disablewallet=1  # LND doesn't require the Bitcoin Core wallet.
+#testnet=1       # Comment out to enable Bitcoin mainnet.
 
 # Connection settings
 rpcuser=bitcoin 
 rpcpassword=PASSWORD_[C]
-zmqpubrawblock=tcp://127.0.0.1:29000 
-zmqpubrawtx=tcp://127.0.0.1:29000
+zmqpubrawblock=tcp://127.0.0.1:28332 
+zmqpubrawtx=tcp://127.0.0.1:28333     # With LND, ZMQ ports cannot be the same!
 
 # Optimizations for limited hardware
 dbcache=100
@@ -155,6 +155,8 @@ maxuploadtarget=5000
 ```
 
 * Save & close the file. (Ctrl+X)
+
+Note: it may take a few minutes for your Bitcoin node to re-sync after changing this configuration file.
 
 ### Auto-start bitcoind
 
@@ -168,15 +170,12 @@ As *admin* user:
 * Paste the configuration below:
 
 ```
-# systemd unit for bitcoind
+# Thundroid: systemd unit for bitcoind
 # /etc/systemd/system/bitcoind.service
 
 [Unit]
 Description=Bitcoin daemon
 After=network.target
-
-# for use with sendmail alert
-#OnFailure=systemd-sendmail@%n
 
 [Service]
 # ExecStart creates /run/bitcoind owned by bitcoin
