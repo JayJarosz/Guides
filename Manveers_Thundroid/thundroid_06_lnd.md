@@ -4,12 +4,16 @@
 ### Manveer's Expanded :zap:Thundroid:zap: Guide
 --------
 
-There are three implementations of Lightning: [LND](https://github.com/lightningnetwork/lnd), [c-lightning](https://github.com/ElementsProject/lightning), and [eclair](https://github.com/ACINQ/eclair). We will be using the **LND** implementation.
+There are three implementations of Lightning: [LND](https://github.com/lightningnetwork/lnd) (by [Lightning Labs](https://lightning.engineering/)), [c-lightning](https://github.com/ElementsProject/lightning) (by [Blockstream](https://blockstream.com/)), and [eclair](https://github.com/ACINQ/eclair) (by [ACINQ](https://acinq.co/)). 
+
+We will be using the **LND** implementation.
 
 The other two implementations can also be installed, but **only one implementation should run at any given time**.
 
-# Go Installation
+# Install/Update Go
 LND is written in Go (a programming language). So in order to work with LND, we need to install build dependencies for Go and dep. 
+
+Note: The minimum version of Go for LND is version 1.9, so you do not necessary have to update Go every time a new version is released.
 
 As *admin* user:
 
@@ -17,18 +21,31 @@ As *admin* user:
   `sudo rm -rf /usr/local/go/`
 
 * Switch into your `downloads` directory.<br/>
-  `cd downloads`
+  `cd /home/admin/downloads`
 
-* Download the latest version of Go (currently 1.10). The minimum version of Go for LND is version 1.9.<br/>
-  `wget https://dl.google.com/go/go1.10.linux-armv6l.tar.gz`
+* Get the download link for the latest stable version of Go for Linux ARMv6: https://golang.org/dl/
+
+* Download Go.<br/>
+  `wget https://dl.google.com/go/go1.11.1.linux-armv6l.tar.gz`
 
 * Extract the downloaded Go archive into our `/usr/local` directory.<br/>
-  `sudo tar -C /usr/local -xzf go1.10.linux-armv6l.tar.gz`
+  `sudo tar -C /usr/local -xzf go1.11.1.linux-armv6l.tar.gz`
   * `tar` is used to extract archives
   * `-C` = change directory (so the package content will be unpacked there)
   * `-x` = extract 
   * `-z` = gzipped archive
   * `-f` = use a file (the file you are uncompressing)
+
+* Check the active version of Go binaries.
+  `go version`
+
+* You should see:
+```
+go version go1.11.1 linux/arm
+```
+
+### Go Initial Setup
+You only have to do this once. You do NOT have to repeat this for updates.
 
 * Open *admin*'s .bashrc file in Nano editor.<br/>
   `nano /home/admin/.bashrc`
@@ -47,19 +64,19 @@ export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
 * Reload *admin*'s `.bashrc`.<br/>
   `source /home/admin/.bashrc`
 
-* Download "dep" package manager for Golang. It will be installed when running `make` in the next section.<br/>
-  `go get -u github.com/golang/dep/cmd/dep`
-
 
 # LND Installation
 
 * Download LND.<br/>
   `go get -d github.com/lightningnetwork/lnd`
 
+* Download "dep" package manager for Golang.<br/>
+  `go get -u github.com/golang/dep/cmd/dep`
+
 * Change into the LND download directory.<br/>
   `cd $GOPATH/src/github.com/lightningnetwork/lnd`
 
-* Build and then install LND (and dep).<br/>
+* Build and then install LND and dep.<br/>
   `make && make install`
 
 * Switch directories.<br/>
@@ -69,8 +86,8 @@ export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
   `sudo cp lnd lncli /usr/local/bin/`
 
 
-# Initial Setup
-You only have to do this once.
+# LND Initial Setup
+You only have to do this once. You do NOT have to repeat this for updates.
 
 ### Public IP Script
 To announce our public IP address to the Lightning network, we need to first get it from a source outside of our network. 
@@ -279,7 +296,32 @@ If you want *admin* user to be able to run `lncli` commands, you'll need to do t
 * Make sure that lncli works by unlocking your wallet and getting some node information.
   `lncli unlock`<br/>
   `sudo journalctl -f -u lnd`
-  
+
+
+### Assign LND permissions to *root* (optional)
+If you want *root* user to be able to run `lncli` commands, you'll need to do the following:
+
+* Make sure permission files `admin.macaroon` and `readonly.macaroon` have been created.<br/>
+  `ls -la /home/bitcoin/.lnd/`
+
+* Create an LND directory for *admin* user.<br/>
+  `mkdir /home/admin/.lnd`
+
+* Copy permission files to *admin* user.<br/>
+  `sudo cp /home/bitcoin/.lnd/admin.macaroon /home/admin/.lnd`
+
+* Copy TLS cert to *admin* user.<br/>
+  `sudo cp /home/bitcoin/.lnd/tls.cert /home/admin/.lnd`
+
+* Make *admin* user the owner of the `/home/admin/.lnd/` directory and all files inside of it (`-R`).<br/>
+  `sudo chown -R admin:admin /home/admin/.lnd/`
+
+* Make sure that lncli works by unlocking your wallet and getting some node information.
+  `lncli unlock`<br/>
+  `sudo journalctl -f -u lnd`
+
+^^ TO DO
+
 
 # Using LND
 
