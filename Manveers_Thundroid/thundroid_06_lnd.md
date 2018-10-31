@@ -8,65 +8,6 @@ There are three implementations of Lightning: [LND](https://github.com/lightning
 
 The other two implementations can also be installed, but **only one implementation should run at any given time**.
 
-
-# Public IP Script
-To announce our public IP address to the Lightning network, we need to first get it from a source outside of our network. 
-
-As *admin* user, create the following script that checks the IP every 10 minutes (600 seconds) and stores it locally.
-
-* Create script `getpublicip.sh`.<br/>
-  `sudo nano /usr/local/bin/getpublicip.sh`
-
-* Paste the following into `getpublicip.sh`:
-
-```
-#!/bin/bash
-# getpublicip.sh
-echo 'getpublicip.sh started, writing public IP address every 10 minutes into /run/publicip'
-while [ 0 ]; 
-    do 
-    printf "PUBLICIP=$(curl -vv ipinfo.io/ip 2> /run/publicip.log)\n" > /run/publicip;
-    sleep 600
-done;
-```
-
-* Save & close the file. (Ctrl+X)
-
-* Make the script executable.<br/>
-  `sudo chmod +x /usr/local/bin/getpublicip.sh`
-
-* Create the corresponding systemd unit.<br/>
-  `sudo nano /etc/systemd/system/getpublicip.service`
-
-```
-[Unit]
-Description=getpublicip.sh: get public ip address from ipinfo.io
-After=network.target
-
-[Service]
-User=root
-Group=root
-Type=simple
-ExecStart=/usr/local/bin/getpublicip.sh
-Restart=always
-RestartSec=600
-TimeoutSec=10
-
-[Install]
-WantedBy=multi-user.target
-```
-
-* Save & close the file. (Ctrl+X)
-
-* Enable systemd startup.<br/>
-  `sudo systemctl enable getpublicip`<br/>
-  `sudo systemctl start getpublicip`<br/>
-  `sudo systemctl status getpublicip`
-
-* Check if data file has been created (and view your public IP).<br/>
-  `cat /run/publicip`
-
-
 # Go Installation
 LND is written in Go (a programming language). So in order to work with LND, we need to install build dependencies for Go and dep. 
 
@@ -128,7 +69,66 @@ export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
   `sudo cp lnd lncli /usr/local/bin/`
 
 
-# Prepare LND Directory on External HDD/SSD
+# Initial Setup
+You only have to do this once.
+
+### Public IP Script
+To announce our public IP address to the Lightning network, we need to first get it from a source outside of our network. 
+
+As *admin* user, create the following script that checks the IP every 10 minutes (600 seconds) and stores it locally.
+
+* Create script `getpublicip.sh`.<br/>
+  `sudo nano /usr/local/bin/getpublicip.sh`
+
+* Paste the following into `getpublicip.sh`:
+```
+#!/bin/bash
+# getpublicip.sh
+echo 'getpublicip.sh started, writing public IP address every 10 minutes into /run/publicip'
+while [ 0 ]; 
+    do 
+    printf "PUBLICIP=$(curl -vv ipinfo.io/ip 2> /run/publicip.log)\n" > /run/publicip;
+    sleep 600
+done;
+```
+
+* Save & close the file. (Ctrl+X)
+
+* Make the script executable.<br/>
+  `sudo chmod +x /usr/local/bin/getpublicip.sh`
+
+* Create the corresponding systemd unit.<br/>
+  `sudo nano /etc/systemd/system/getpublicip.service`
+
+```
+[Unit]
+Description=getpublicip.sh: get public ip address from ipinfo.io
+After=network.target
+
+[Service]
+User=root
+Group=root
+Type=simple
+ExecStart=/usr/local/bin/getpublicip.sh
+Restart=always
+RestartSec=600
+TimeoutSec=10
+
+[Install]
+WantedBy=multi-user.target
+```
+
+* Save & close the file. (Ctrl+X)
+
+* Enable systemd startup.<br/>
+  `sudo systemctl enable getpublicip`<br/>
+  `sudo systemctl start getpublicip`<br/>
+  `sudo systemctl status getpublicip`
+
+* Check if data file has been created (and view your public IP).<br/>
+  `cat /run/publicip`
+
+### Prepare LND Directory on External HDD/SSD
 
 * Open session with *bitcoin* user.<br/>
   `sudo su bitcoin`
@@ -148,8 +148,10 @@ export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
 ![Symbolic Links](images/hdd-symbolic-link.png)
 
 
-# LND Configuration
+### LND Configuration
 Now that LND is installed, we need to configure it to work with Bitcoin Core and run automatically on startup.
+
+As *bitcoin* user:
 
 * Create the configuration file for LND.<br/>
   `nano /home/bitcoin/.lnd/lnd.conf`
@@ -256,7 +258,7 @@ Note: for security reasons, only our *bitcoin* user can interact with bitcoind a
 ⚠️ Your 24 word seed must be kept secret at all times. Write these 24 words down manually on a piece of paper and store it in a safe place. This piece of paper is all an attacker needs to completely empty your wallet! Do not store it on a computer. Do not take a picture with your mobile phone. This information should never be stored anywhere in digital form.
 
 
-# Assign LND permissions to *admin* (optional)
+### Assign LND permissions to *admin* (optional)
 If you want *admin* user to be able to run `lncli` commands, you'll need to do the following:
 
 * Make sure permission files `admin.macaroon` and `readonly.macaroon` have been created.<br/>
@@ -277,7 +279,7 @@ If you want *admin* user to be able to run `lncli` commands, you'll need to do t
 * Make sure that lncli works by unlocking your wallet and getting some node information.
   `lncli unlock`<br/>
   `sudo journalctl -f -u lnd`
-
+  
 
 # Using LND
 
@@ -290,7 +292,6 @@ If you want *admin* user to be able to run `lncli` commands, you'll need to do t
 * Check your LND wallet balance.<br/>
   `lncli walletbalance`
 
-
 ### Buying Blockstream's Lightning Sticker (optional)
 
 We are going to put our mainnet node to use by buying Blockstream's [I Got Lightning Working](https://store.blockstream.com/product/lightning-sticker/) sticker. This sticker can only be purchased using Lightning.
@@ -299,7 +300,6 @@ We are going to put our mainnet node to use by buying Blockstream's [I Got Light
 
 * Look up Blockstream's node.<br/>
   `lncli getnodeinfo 02f6725f9c1c40333b67faea92fd211c183050f28df32cac3f9d69685fe9665432`
-
 ```
 {
     "node": {
@@ -342,7 +342,6 @@ Also, your channel amount has to be less than the size your Lightning wallet bal
 
 * View the blockchain transaction used to open your channel.<br/>
   `lncli listchaintxns`
-
 ```
 {
     "tx_hash": "fa9d363061f3dee7ab5fa4bd343b0d6d78ab95e4b74fd6bd83cd82cc57fedee0",
@@ -364,7 +363,6 @@ Also, your channel amount has to be less than the size your Lightning wallet bal
 
 * View your Active channels. Note: 3620 satoshi are unusable due to them being used as a "commit fee". This is to ensure the channel has enough money to pay for the required miner fees to close the channel on the blockchain. You may get a portion of these fees back if the miner fee is cheaper when the channel is closed.<br/>
   `lncli listchannels`
-
 ```
 {
     "channels": [
@@ -394,7 +392,6 @@ Also, your channel amount has to be less than the size your Lightning wallet bal
 
 * View the fees associated with your open channels.<br/>
   `lncli feereport`
-
 ```
 {
     "channel_fees": [
@@ -436,7 +433,6 @@ lncli decodepayreq lnbc893976910p1pddqr0spp54pswvfqxmhnqh3hzxpy264a3u8uj6eqaa60t
 
 * If everything looks good, go ahead and pay for the invoice. Again, remember to replace `bolt11_string` with your own unique invoice code.<br/>
   `lncli payinvoice bolt11_string`
-
 ```
 {
 	"payment_error": "",
@@ -458,7 +454,6 @@ lncli decodepayreq lnbc893976910p1pddqr0spp54pswvfqxmhnqh3hzxpy264a3u8uj6eqaa60t
 
 * The payment should now be added to your history of payments.<br/>
   `lncli listpayments`
-
 ```
 {
     "payments": [
@@ -478,7 +473,6 @@ lncli decodepayreq lnbc893976910p1pddqr0spp54pswvfqxmhnqh3hzxpy264a3u8uj6eqaa60t
 
 * View your open channel with Blockstream again. Note how satoshis have shifted from `local_balance` to `remote_balance`.<br/>
   `lncli listchannels`
-
 ```
 {
     "channels": [
@@ -508,7 +502,6 @@ lncli decodepayreq lnbc893976910p1pddqr0spp54pswvfqxmhnqh3hzxpy264a3u8uj6eqaa60t
 
 * View the blockchain transaction for closing your channel. Note how my channel was opened for 110,000 satoshi, my invoice was 89,397, and I got back 19,308 satoshi when closing the channel. This leaves a difference of 1,295 satoshi lost to miner fees for closing the channel (on top of the 3,130 satoshi spent earlier to open the channel).<br/>
   `lncli listchaintxns`
-
 ```
 {
     "tx_hash": "a7e3b39eea623bdcee73dc6983e93b60615e890344be878260c92676ea20e952",
@@ -528,13 +521,11 @@ Note: if you already have open channels with other nodes, there's a chance you'r
   `lncli queryroutes 02f6725f9c1c40333b67faea92fd211c183050f28df32cac3f9d69685fe9665432 invoice_amt_in_satoshi`
 
 * If there are no indirect connections OR if they are not big enough to support your `invoice_amt_in_satoshi` value, you'll see a message like this:
-
 ```
 [lncli] rpc error: code = Unknown desc = unable to find a path to destination
 ```
 
 * If you are indirectly (or directly) connected to Blockstream's node AND the capacities are big enough to support your `invoice_amt_in_satoshi` value, you'll see a message like this:
-
 ```
 lncli queryroutes 02f6725f9c1c40333b67faea92fd211c183050f28df32cac3f9d69685fe9665432 89397
 {
@@ -599,7 +590,6 @@ Follow these instructions if you want to switch between mainnet and testnet.
 
 * Edit the `bitcoin.conf` file.<br/>
   `sudo nano /home/bitcoin/.bitcoin/bitcoin.conf`
-
 ```
 # Comment-out the following line to enable Bitcoin mainnet.
 # (or un-comment it to enable Bitcoin testnet)
@@ -610,7 +600,6 @@ Follow these instructions if you want to switch between mainnet and testnet.
 
 * Edit the `lnd.conf` file.<br/>
   `sudo nano /home/bitcoin/.lnd/lnd.conf`
-
 ```
 # enable either testnet or mainnet
 #bitcoin.testnet=1
