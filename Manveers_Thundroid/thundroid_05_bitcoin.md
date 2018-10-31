@@ -79,7 +79,7 @@ Primary key fingerprint: 01EA 5486 DE18 A882 D4C2 6845 90C8 019E 36C2 E964
   * `-f` = use a file (the file you are uncompressing)
 
 * Install the Bitcoin Core binaries.<br/>
-  `sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-0.17.0.1/bin/*`
+  `sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-0.17.0/bin/*`
 * Check the active version of Bitcoin Core binaries.<br/>
   `bitcoind -version`
 * You should see:
