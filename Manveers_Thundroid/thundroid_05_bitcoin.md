@@ -84,7 +84,7 @@ Primary key fingerprint: 01EA 5486 DE18 A882 D4C2 6845 90C8 019E 36C2 E964
   `bitcoind -version`
 * You should see:
 ```
-Bitcoin Core Daemon version v0.17.0
+Bitcoin Core Daemon version v0.17.0.1
 ```
 
 ### Stay up-to-date
@@ -123,6 +123,8 @@ You only have to do this once.
 
 ### Configuration
 
+As *bitcoin* user:
+
 * Create the configuration file for bitcoind.<br/>
   `nano /home/bitcoin/.bitcoin/bitcoin.conf`
 * Paste the configuration below and replace PASSWORD_[C] with your password.
@@ -143,6 +145,13 @@ rpcuser=bitcoin
 rpcpassword=PASSWORD_[C]
 zmqpubrawblock=tcp://127.0.0.1:29000 
 zmqpubrawtx=tcp://127.0.0.1:29000
+
+# Optimizations for limited hardware
+dbcache=100
+maxorphantx=10
+maxmempool=50
+maxconnections=40
+maxuploadtarget=5000
 ```
 
 * Save & close the file. (Ctrl+X)
@@ -151,6 +160,9 @@ zmqpubrawtx=tcp://127.0.0.1:29000
 
 * Exit *bitcoin* user session and return to *admin* user.<br/>
   `exit` (or Ctrl+D)
+
+As *admin* user:
+
 * Create the configuration file for bitcoind.service.<br/>
   `sudo nano /etc/systemd/system/bitcoind.service`
 * Paste the configuration below:
@@ -167,24 +179,51 @@ After=network.target
 #OnFailure=systemd-sendmail@%n
 
 [Service]
+# ExecStart creates /run/bitcoind owned by bitcoin
+ExecStart=/usr/local/bin/bitcoind -daemon -conf=/home/bitcoin/.bitcoin/bitcoin.conf -pid=/run/bitcoind/bitcoind.pid
+PIDFile=/run/bitcoind/bitcoind.pid
+RuntimeDirectory=bitcoind
 User=bitcoin
 Group=bitcoin
 Type=forking
-PIDFile=/home/bitcoin/.bitcoin/bitcoind.pid
-ExecStart=/usr/local/bin/bitcoind -pid=/home/bitcoin/.bitcoin/bitcoind.pid
-KillMode=process
-Restart=always
-TimeoutSec=120
-RestartSec=30
+Restart=on-failure
+
+#####################
+# HARDENING MEASURES
+
+# Provide a private /tmp and /var/tmp.
+PrivateTmp=true
+
+# Mount /usr, /boot/ and /etc read-only for the process.
+ProtectSystem=full
+
+# Disallow the process and all of its children to gain
+# new privileges through execve().
+NoNewPrivileges=true
+
+# Use a new /dev namespace only populated with API pseudo devices
+# such as /dev/null, /dev/zero and /dev/random.
+PrivateDevices=true
+
+# Deny the creation of writable and executable memory mappings.
+MemoryDenyWriteExecute=true
 
 [Install]
 WantedBy=multi-user.target
 ```
 
 * Save & close the file. (Ctrl+X)
-* Enable the systemd unit file and start it manually.<br/>
-  `sudo systemctl enable bitcoind`<br/>
-  `sudo systemctl start bitcoind`
+
+* Enable the configuration file and start it manually.<br/>
+  `sudo systemctl enable bitcoind.service`
+  `sudo systemctl start bitcoind.service`
+
+* Copy `bitcoin.conf` to *admin* user's home directory for RPC credentials.<br/>
+  `sudo cp /home/bitcoin/.bitcoin/bitcoin.conf /home/admin/.bitcoin/`
+
+* Make *admin* user the owner of the copied file.<br/>
+  `sudo chown admin:admin /home/admin/.bitcoin/bitcoin.conf`
+
 * Restart your Thundroid.<br/>
   `sudo shutdown -r now`
 
