@@ -252,7 +252,6 @@ We're going to create an update script and have it automatically run every week.
 * Create an `auto-update` file using Nano editor in the `cron.weekly` folder.<br/>
   `nano /etc/cron.weekly/auto-update`
 * Paste the following instructions:<br/>
-
 ```
 #!/bin/bash
 apt update
@@ -275,7 +274,7 @@ You are finished :) The cron job will run weekly and:
 ⚠️ Note: you'll still need to manually update your Bitcoin Core and LND clients.
 
 ### Bonus: Auto-Update w/ IFTTT Notification
-If you want to be notified when your system is updated and whether it was successful or not, use this script instead of the one above.
+If you want to be notified when your Ubuntu system is updated and whether it was successful or not, use this script instead of the one above.
 
 For notifications, you'll need an [IFTTT Webhooks key](https://ifttt.com/maker_webhooks) and the following IFTTT Applet setup:
 
@@ -293,12 +292,13 @@ Then as *root* user:
 * Paste the following script AND add your webhooks key!<br/>
 
 ```
+#!/bin/bash
 # This script will update your Ubuntu system every week,
 # and informs you via IFTTT webhooks if the update was successful or not. 
 # Place this script in /etc/cron.weekly/autoupdate.sh
 
 # Set the variable for your IFTTT webhooks key.
-webhooks_key="paste_your_key_here"
+webhooks_key="paste_your_key_here"                # <-PASTE YOUR KEY!
 
 # Create a temporary path in /tmp to write a temporary log file. No need to edit.
 updatelog=$(mktemp)
@@ -412,11 +412,9 @@ Here's how you can permanently turn off the blinking blue LED:
 * Open the `/etc/rc.local` file using Nano editor.<br/>
   `sudo nano /etc/rc.local`
 * Paste this line before `exit 0`.<br/>
-
 ```
 echo none > /sys/class/leds/blue:heartbeat/trigger
 ```
-
 * Save & close the file. (Ctrl+X)
 * Restart your odroid.<br/>
   `sudo shutdown -r now`
@@ -438,7 +436,6 @@ If you want to learn more about how LEDs work on Odroid, here are some useful co
   `cd /sys/class/leds/blue:heartbeat`
 * View a list of all supported LED modes (for the LED whose directory you're in), and the LED mode that is currently used [heartbeat].<br/>
   `cat trigger`
-
 ```
 none rc-feedback kbd-scrolllock kbd-numlock kbd-capslock kbd-kanalock kbd-shiftlock kbd-altgrlock kbd-ctrllock kbd-altlock kbd-shiftllock kbd-shiftrlock kbd-ctrlllock kbd-ctrlrlock mmc0 mmc1 [heartbeat] rfkill-any rfkill0 phy0rx phy0tx phy0assoc phy0radio 
 ```
