@@ -22,11 +22,11 @@ Get download links for Bitcoin Core directly from https://bitcoin.org/en/downloa
 
 * Right-click > Copy Link Address on "ARM Linux".
 ```
-https://bitcoin.org/bin/bitcoin-core-0.17.0/bitcoin-0.17.0-arm-linux-gnueabihf.tar.gz
+https://bitcoin.org/bin/bitcoin-core-0.17.0.1/bitcoin-0.17.0.1-arm-linux-gnueabihf.tar.gz
 ```
 * Right-click > Copy Link Address on "Verify release signatures".
 ```
-https://bitcoin.org/bin/bitcoin-core-0.17.0/SHA256SUMS.asc
+https://bitcoin.org/bin/bitcoin-core-0.17.0.1/SHA256SUMS.asc
 ```
 * Right-click > Copy Link Address on "Release Signing Keys" > "v0.11.0+".
 ```
@@ -60,7 +60,7 @@ You can skip this section if you're just updating and the signing keys haven't c
   `sha256sum --check SHA256SUMS.asc --ignore-missing`
 * Expected output:
 ```
-bitcoin-0.17.0-arm-linux-gnueabihf.tar.gz: OK
+bitcoin-0.17.0.1-arm-linux-gnueabihf.tar.gz: OK
 ```
 
 * Verify the signed checksum file and check the fingerprint again in case of malicious keys.<br/>
@@ -72,14 +72,14 @@ Primary key fingerprint: 01EA 5486 DE18 A882 D4C2 6845 90C8 019E 36C2 E964
 ```
 
 * Extract the Bitcoin Core binaries.<br/>
-  `tar -xvf bitcoin-0.17.0-arm-linux-gnueabihf.tar.gz`
+  `tar -xvf bitcoin-0.17.0.1-arm-linux-gnueabihf.tar.gz`
   * `tar` is used to extract archives
   * `-x` = extract 
   * `-v` = verbosely list files processed
   * `-f` = use a file (the file you are uncompressing)
 
 * Install the Bitcoin Core binaries.<br/>
-  `sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-0.17.0/bin/*`
+  `sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-0.17.0.1/bin/*`
 * Check the active version of Bitcoin Core binaries.<br/>
   `bitcoind -version`
 * You should see:
