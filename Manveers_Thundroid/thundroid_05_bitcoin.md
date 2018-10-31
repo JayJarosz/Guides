@@ -53,8 +53,8 @@ You can skip this section if you're just updating and the signing keys haven't c
   `rm SHA256SUMS.asc`
 
 * Download the latest Bitcoin Core ARM binaries using the links found directly from [bitcoin.org](https://bitcoin.org/en/download).<br/>
-  `wget https://bitcoin.org/bin/bitcoin-core-0.17.0/bitcoin-0.17.0-arm-linux-gnueabihf.tar.gz`<br/>
-  `wget https://bitcoin.org/bin/bitcoin-core-0.17.0/SHA256SUMS.asc`
+  `wget https://bitcoin.org/bin/bitcoin-core-0.17.0.1/bitcoin-0.17.0.1-arm-linux-gnueabihf.tar.gz`<br/>
+  `wget https://bitcoin.org/bin/bitcoin-core-0.17.0.1/SHA256SUMS.asc`
 
 * Check that the reference checksum matches the real checksum. This is a precaution to make sure that this is an official release and not a malicious version trying to steal our money.<br/>
   `sha256sum --check SHA256SUMS.asc --ignore-missing`
@@ -80,9 +80,9 @@ Primary key fingerprint: 01EA 5486 DE18 A882 D4C2 6845 90C8 019E 36C2 E964
 
 * Install the Bitcoin Core binaries.<br/>
   `sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-0.17.0/bin/*`
-* Check active version of the Bitcoin Core binaries.<br/>
+* Check the active version of Bitcoin Core binaries.<br/>
   `bitcoind -version`
-* Expected output:
+* You should see:
 ```
 Bitcoin Core Daemon version v0.17.0
 ```
