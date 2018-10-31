@@ -4,7 +4,11 @@
 ### Manveer's Expanded :zap:Thundroid:zap: Guide
 --------
 
-There are three implementations of Lightning: [LND](https://github.com/lightningnetwork/lnd) (by [Lightning Labs](https://lightning.engineering/)), [c-lightning](https://github.com/ElementsProject/lightning) (by [Blockstream](https://blockstream.com/)), and [eclair](https://github.com/ACINQ/eclair) (by [ACINQ](https://acinq.co/)). 
+There are three implementations of Lightning: 
+
+* [LND](https://github.com/lightningnetwork/lnd) (by [Lightning Labs](https://lightning.engineering/))
+* [c-lightning](https://github.com/ElementsProject/lightning) (by [Blockstream](https://blockstream.com/))
+* [eclair](https://github.com/ACINQ/eclair) (by [ACINQ](https://acinq.co/)). 
 
 We will be using the **LND** implementation.
 
