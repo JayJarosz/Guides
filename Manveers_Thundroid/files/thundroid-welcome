@@ -17,12 +17,16 @@ color_yellow='\033[0;33m'
 #color_gray='\033[0;37m' # Light gray (if using black background)
 color_gray='\033[0;90m'  # Dark gray (if using white background)
 
-# Set datadir
+# Set datadir (data directories)
 bitcoin_dir="/home/bitcoin/.bitcoin"
 lnd_dir="/home/bitcoin/.lnd"
 
 # Get uptime & load
 load=$(w | grep "load average:" | cut -c11-)
+
+# Get CPU temp
+cpu=$(cat /sys/class/thermal/thermal_zone0/temp)
+temp=$((cpu/1000))
 
 # Get memory (RAM)
 ram_avail=$(free -m | grep Mem | awk '{ print $7 }')
@@ -57,12 +61,12 @@ fi
 network_rx=$(ifconfig eth0 | grep 'RX bytes' | awk '{ print $3$4 }' | sed 's/[()]//g')
 network_tx=$(ifconfig eth0 | grep 'TX bytes' | awk '{ print $7$8 }' | sed 's/[()]//g')
 
-# Bitcoin blockchain
+# Get Bitcoin Core info
 btc_path=$(command -v bitcoin-cli)
 if [ -n ${btc_path} ]; then
   btc_title="₿itcoin"
 
-  chain="$(bitcoin-cli -datadir=/home/bitcoin/.bitcoin getblockchaininfo | jq -r '.chain')"
+  chain="$(bitcoin-cli -datadir=${bitcoin_dir} getblockchaininfo | jq -r '.chain')"
   if [ -n $chain ]; then
     btc_title="${btc_title} (${chain}net)"
 
@@ -74,15 +78,15 @@ if [ -n ${btc_path} ]; then
     progress="$(bitcoin-cli -datadir=${bitcoin_dir} getblockchaininfo | jq -r '.verificationprogress')"
     sync_percentage=$(printf "%.2f%%" "$(echo $progress | awk '{print 100 * $1}')")
 
-    if [ ${block_diff} -eq 0 ]; then    # fully synced
+    if [ ${block_diff} -eq 0 ]; then     # fully synced
       sync="OK"
       sync_color="${color_green}"
       sync_behind=" "
-    elif [ ${block_diff} -eq 1 ]; then          # fully synced
+    elif [ ${block_diff} -eq 1 ]; then   # fully synced
       sync="OK"
       sync_color="${color_green}"
       sync_behind="1 block behind"
-    elif [ ${block_diff} -le 10 ]; then    # <= 2 blocks behind
+    elif [ ${block_diff} -le 10 ]; then  # <= 2 blocks behind
       sync="Catching up"
       sync_color="${color_red}"
       sync_behind="${block_diff} blocks behind"
@@ -117,10 +121,10 @@ if [ "${public_port}" = "" ]; then
   fi
 fi
 
-public_check=$(curl -s https://bitnodes.earn.com/api/v1/nodes/me-${public_port}/ | jq .success)
-#public_check=$(curl -s https://bitnodes.earn.com/api/v1/nodes/${public_ip}-${public_port}/ | jq .success)
-
-if [ $public_check = "true" ]; then
+#public_check=$(curl -s https://bitnodes.earn.com/api/v1/nodes/me-${public_port}/ | jq .success)
+#if [ $public_check = "true" ]; then
+public_check=$(timeout 2s nc -z ${public_ip} ${public_port}; echo $?)
+if [ $public_check = "0" ]; then
   public="Yes"
   public_color="${color_green}"
 else
@@ -129,15 +133,39 @@ else
 fi
 public_addr="${public_ip}:${public_port}"
 
-# Get Lightning info
-# LND
-ln_alias="$(/usr/local/bin/lncli --macaroonpath=${lnd_dir}/readonly.macaroon getinfo | jq -r '.alias')" 2>null
-ln_channels_online="$(/usr/local/bin/lncli --macaroonpath=${lnd_dir}/readonly.macaroon getinfo | jq -r '.num_active_channels')"
-ln_channels_total="$(/usr/local/bin/lncli --macaroonpath=${lnd_dir}/readonly.macaroon listchannels | jq '.[] | length')"
+
+# Get LND info
+if [ $chain = "test" ]; then
+  macaroon_path="${lnd_dir}/data/chain/bitcoin/testnet/readonly.macaroon"
+else
+  macaroon_path="${lnd_dir}/data/chain/bitcoin/mainnet/readonly.macaroon"
+fi
+
+/usr/local/bin/lncli --macaroonpath=${macaroon_path} --tlscertpath=${lnd_dir}/tls.cert getinfo 2>&1 | grep "Please unlock" >/dev/null
+wallet_unlocked=$?
+if [ "$wallet_unlocked" -eq 0 ] ; then
+ alias_color="${color_red}"
+ ln_alias="Wallet Locked"
+else
+ alias_color="${color_grey}"
+ln_alias="$(/usr/local/bin/lncli --macaroonpath=${macaroon_path} --tlscertpath=${lnd_dir}/tls.cert getinfo | jq -r '.alias')" 2>/dev/null
+ ln_walletbalance="$(/usr/local/bin/lncli --macaroonpath=${macaroon_path} --tlscertpath=${lnd_dir}/tls.cert walletbalance | jq -r '.confirmed_balance')" 2>/dev/null
+ ln_channelbalance="$(/usr/local/bin/lncli --macaroonpath=${macaroon_path} --tlscertpath=${lnd_dir}/tls.cert channelbalance | jq -r '.balance')" 2>/dev/null
+
+fi
+ln_channels_online="$(/usr/local/bin/lncli --macaroonpath=${macaroon_path} --tlscertpath=${lnd_dir}/tls.cert getinfo | jq -r '.num_active_channels')" 2>/dev/null
+ln_channels_total="$(/usr/local/bin/lncli --macaroonpath=${macaroon_path} --tlscertpath=${lnd_dir}/tls.cert listchannels | jq '.[] | length')" 2>/dev/null
+ln_external="$(/usr/local/bin/lncli --macaroonpath=${macaroon_path} --tlscertpath=${lnd_dir}/tls.cert getinfo | jq -r '.uris[0]' | tr "@" " " |  awk '{ print $2 }')" 2>/dev/null
+ln_external_ip="$(echo $ln_external | tr ":" " " | awk '{ print $1 }' )" 2>/dev/null
+if [ "$ln_external_ip" = "$public_ip" ]; then
+  external_color="${color_grey}"
+else
+  external_color="${color_red}"
+fi
 
 printf "
 ${color_yellow}         ___________
-${color_yellow}        /         ./   Thundroid: ${color_gray}Bitcoin Core & Lightning
+${color_yellow}        /         ./   Thundroid
 ${color_yellow}       /        ./     -----------------------------------------------------------------------
 ${color_yellow}      /       ./       ${color_gray}%s
 ${color_yellow}     /      ./___
@@ -147,7 +175,8 @@ ${color_yellow}       /   ./          ${color_gray}SD       ${color_sd}%-16s${co
 ${color_yellow}      /  ./            ${color_gray}HDD      ${color_hdd}%-16s${color_gray}Public  ${public_color}%-14s
 ${color_yellow}     / ./              ${color_gray}Bandwith ▲ %-12s  %s
 ${color_yellow}    / /                ${color_gray}         ▼ %-12s  Mempool %s tx
-${color_yellow}   /.                  -----------------------------------------------------------------------
+${color_yellow}   /.                  ${color_gray}CPU      %-16s
+${color_yellow}  /                    -----------------------------------------------------------------------
 \n" \
 "${load}" \
 "Resources free" "${btc_title}" "Lightning (LND)" \
@@ -155,7 +184,8 @@ ${color_yellow}   /.                  ------------------------------------------
 "${sd}" "${sync_behind}" "${ln_channels_online}" "${ln_channels_total}" \
 "${hdd}" "${public}" \
 "${network_tx}" "${public_addr}" \
-"${network_rx}" "${mempool}"
+"${network_rx}" "${mempool}" \
+"${temp}°C"
 
 # Reset the colours to the terminal defaults using: tput sgr0
 echo "$(tput -T xterm sgr0)"
