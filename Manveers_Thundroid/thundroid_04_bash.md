@@ -200,28 +200,30 @@ MOTD = Message Of The Day. When users login to their shell account on a Linux-ba
 
 ![System Overview MOTD - Dark](images/system-overview-motd-black.png)
 
-* As *admin* user, go into the **downloads** directory.<br/>
+As *admin* user:
+
+* Go into the **downloads** directory.<br/>
   `cd /home/admin/downloads/`
-* Download Stadicus' system overview MOTD script.<br/>
-  `wget https://gist.githubusercontent.com/Stadicus/ffbbd855d23cd068f7b739cae6440f4b/raw/ab2c97bd554c003b88f5e9a8793a047805d5e4b0/20-thundroid-welcome`
+* Download the [Thundroid MOTD script](https://github.com/ManveerJarosz/Guides/blob/master/Manveers_Thundroid/files/thundroid-welcome).<br/>
+  `wget https://raw.githubusercontent.com/ManveerJarosz/Guides/master/Manveers_Thundroid/files/thundroid-welcome`
 * Check script & exit. This script will run as root, so please check it before blindly trusting it!<br/>
-  `nano 20-thundroid-welcome`
+  `nano thundroid-welcome`
 * Delete all existing MOTD scripts.<br/>
   `sudo rm /etc/update-motd.d/*`
-* Copy the Stadicus' MOTD script into your system's MOTD directory.<br/>
-  `sudo cp 20-thundroid-welcome /etc/update-motd.d/`
-* Change the script's file permissions so that it can be executed (that's what the 'x' means).<br/>
-  `sudo chmod +x /etc/update-motd.d/20-thundroid-welcome`
+* Copy the Thundroid MOTD script into your system's MOTD directory.<br/>
+  `sudo cp thundroid-welcome /etc/update-motd.d/`
+* Add execution permissions to all users (that's what the '+x' means).<br/>
+  `sudo chmod +x /etc/update-motd.d/thundroid-welcome`
 * Make link.<br/>
-  `sudo ln -s /etc/update-motd.d/20-thundroid-welcome /usr/local/bin/thundroid`
+  `sudo ln -s /etc/update-motd.d/thundroid-welcome /usr/local/bin/thundroid`
 * Now logout of your Thundroid (Ctrl+D) and log back in again to make sure the new MOTD is working. 
 
 Below are two useful commands to edit/run the MOTD as needed:
 
 ```
 # To edit the system overview MOTD
-sudo nano /etc/update-motd.d/20-thundroid-welcome
+sudo nano /etc/update-motd.d/thundroid-welcome
 
 # To run the system overview MOTD on demand (i.e. without having to logout and log back in again)
-/etc/update-motd.d/20-thundroid-welcome
+/etc/update-motd.d/thundroid-welcome
 ```
