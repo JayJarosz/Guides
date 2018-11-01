@@ -1,7 +1,14 @@
 #!/bin/sh
-# created by Stadicus, modified by Manveer
-# make executable and copy script to /etc/update-motd.d/
-# root must be able to execute bitcoin-cli and lncli
+# Thundroid: System Overview MOTD
+# Created by Stadicus: https://github.com/Stadicus/guides/blob/433da20e5f7d772ae8911568d499acdce877bdef/raspibolt/resources/20-raspibolt-welcome
+# Improved by Manveer
+
+# Instructions:
+# 1. copy this script to /etc/update-motd.d/
+# 2. make this script executable
+
+# Prerequisites:
+# root user must be able to execute bitcoin-cli and lncli
 
 # Set colors
 color_red='\033[0;31m'
@@ -111,6 +118,7 @@ if [ "${public_port}" = "" ]; then
 fi
 
 public_check=$(curl -s https://bitnodes.earn.com/api/v1/nodes/me-${public_port}/ | jq .success)
+#public_check=$(curl -s https://bitnodes.earn.com/api/v1/nodes/${public_ip}-${public_port}/ | jq .success)
 
 if [ $public_check = "true" ]; then
   public="Yes"
@@ -129,28 +137,31 @@ ln_channels_total="$(/usr/local/bin/lncli --macaroonpath=${lnd_dir}/readonly.mac
 
 printf "
 ${color_yellow}         ___________
-${color_yellow}        /         ./   %s: ${color_gray}Bitcoin Core & Lightning
-${color_yellow}       /        ./     %s
+${color_yellow}        /         ./   Thundroid: ${color_gray}Bitcoin Core & Lightning
+${color_yellow}       /        ./     -----------------------------------------------------------------------
 ${color_yellow}      /       ./       ${color_gray}%s
 ${color_yellow}     /      ./___
 ${color_yellow}    /____      ./      %-24s %-24s %-20s
 ${color_yellow}        /    ./        ${color_gray}Memory   ${color_ram}%-16s${color_gray}Sync    ${sync_color}%-14s${color_gray} %s
-${color_yellow}       /   ./          ${color_gray}SD       ${color_sd}%-16s${color_gray}        %-14s %s / %s Channels online
+${color_yellow}       /   ./          ${color_gray}SD       ${color_sd}%-16s${color_gray}         %-14s %s / %s Channels online
 ${color_yellow}      /  ./            ${color_gray}HDD      ${color_hdd}%-16s${color_gray}Public  ${public_color}%-14s
 ${color_yellow}     / ./              ${color_gray}Bandwith ▲ %-12s  %s
-${color_yellow}    / /                ${color_gray}         ▼ %-12s  Mempool ${mempool} tx
-${color_yellow}   /.                  %s
-%s %s
-" \
-"Thundroid" \
-"-----------------------------------------------------------------------" \
+${color_yellow}    / /                ${color_gray}         ▼ %-12s  Mempool %s tx
+${color_yellow}   /.                  -----------------------------------------------------------------------
+\n" \
 "${load}" \
 "Resources free" "${btc_title}" "Lightning (LND)" \
 "${ram}" "${sync}" "${ln_alias}" \
 "${sd}" "${sync_behind}" "${ln_channels_online}" "${ln_channels_total}" \
 "${hdd}" "${public}" \
 "${network_tx}" "${public_addr}" \
-"${network_rx}" \
-"-----------------------------------------------------------------------"
+"${network_rx}" "${mempool}"
 
+# Reset the colours to the terminal defaults using: tput sgr0
 echo "$(tput -T xterm sgr0)"
+
+# Note:
+# Tput relies on the $TERM user environment variable to determine the terminal type. 
+# Unfortunately this variable is not given until the user is logged in 
+# which is after the MOTD has been displayed. 
+# So whenever we use tput we need to force it to use xterm using the -T argument.
