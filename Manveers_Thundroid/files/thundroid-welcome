@@ -1,7 +1,7 @@
 #!/bin/sh
 # Thundroid: System Overview MOTD
-# Created by Stadicus: https://github.com/Stadicus/guides/blob/433da20e5f7d772ae8911568d499acdce877bdef/raspibolt/resources/20-raspibolt-welcome
-# Improved by Manveer
+# Created by Stadicus: https://gist.githubusercontent.com/Stadicus/ffbbd855d23cd068f7b739cae6440f4b/raw/ab2c97bd554c003b88f5e9a8793a047805d5e4b0/20-thundroid-welcome
+# Updated and improved by Manveer: https://raw.githubusercontent.com/ManveerJarosz/Guides/master/Manveers_Thundroid/files/thundroid-welcome
 
 # Instructions:
 # 1. copy this script to /etc/update-motd.d/
