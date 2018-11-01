@@ -175,8 +175,8 @@ ${color_yellow}       /   ./          ${color_gray}SD       ${color_sd}%-16s${co
 ${color_yellow}      /  ./            ${color_gray}HDD      ${color_hdd}%-16s${color_gray}Public  ${public_color}%-14s
 ${color_yellow}     / ./              ${color_gray}Bandwith ▲ %-12s  %s
 ${color_yellow}    / /                ${color_gray}         ▼ %-12s  Mempool %s tx
-${color_yellow}   /.                  ${color_gray}CPU      %-16s
-${color_yellow}  /                    -----------------------------------------------------------------------
+${color_yellow}   /.                  -----------------------------------------------------------------------
+${color_yellow}  /                    ${color_gray}CPU      %-16s
 \n" \
 "${load}" \
 "Resources free" "${btc_title}" "Lightning (LND)" \
