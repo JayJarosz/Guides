@@ -8,7 +8,7 @@ There are three implementations of Lightning:
 
 * [LND](https://github.com/lightningnetwork/lnd) (by [Lightning Labs](https://lightning.engineering/))
 * [c-lightning](https://github.com/ElementsProject/lightning) (by [Blockstream](https://blockstream.com/))
-* [eclair](https://github.com/ACINQ/eclair) (by [ACINQ](https://acinq.co/)). 
+* [eclair](https://github.com/ACINQ/eclair) (by [ACINQ](https://acinq.co/))
 
 We will be using the **LND** implementation.
 
@@ -69,7 +69,9 @@ export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
   `source /home/admin/.bashrc`
 
 
-# LND Installation
+# Install LND
+
+As *admin* user:
 
 * Download LND.<br/>
   `go get -d github.com/lightningnetwork/lnd`
@@ -92,62 +94,6 @@ export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
 
 # LND Initial Setup
 You only have to do this once. You do NOT have to repeat this for updates.
-
-### Public IP Script
-To announce our public IP address to the Lightning network, we need to first get it from a source outside of our network. 
-
-As *admin* user, create the following script that checks the IP every 10 minutes (600 seconds) and stores it locally.
-
-* Create script `getpublicip.sh`.<br/>
-  `sudo nano /usr/local/bin/getpublicip.sh`
-
-* Paste the following into `getpublicip.sh`:
-```
-#!/bin/bash
-# getpublicip.sh
-echo 'getpublicip.sh started, writing public IP address every 10 minutes into /run/publicip'
-while [ 0 ]; 
-    do 
-    printf "PUBLICIP=$(curl -vv ipinfo.io/ip 2> /run/publicip.log)\n" > /run/publicip;
-    sleep 600
-done;
-```
-
-* Save & close the file. (Ctrl+X)
-
-* Make the script executable.<br/>
-  `sudo chmod +x /usr/local/bin/getpublicip.sh`
-
-* Create the corresponding systemd unit.<br/>
-  `sudo nano /etc/systemd/system/getpublicip.service`
-
-```
-[Unit]
-Description=getpublicip.sh: get public ip address from ipinfo.io
-After=network.target
-
-[Service]
-User=root
-Group=root
-Type=simple
-ExecStart=/usr/local/bin/getpublicip.sh
-Restart=always
-RestartSec=600
-TimeoutSec=10
-
-[Install]
-WantedBy=multi-user.target
-```
-
-* Save & close the file. (Ctrl+X)
-
-* Enable systemd startup.<br/>
-  `sudo systemctl enable getpublicip`<br/>
-  `sudo systemctl start getpublicip`<br/>
-  `sudo systemctl status getpublicip`
-
-* Check if data file has been created (and view your public IP).<br/>
-  `cat /run/publicip`
 
 ### Prepare LND Directory on External HDD/SSD
 
@@ -180,12 +126,11 @@ As *bitcoin* user:
 * Paste the following configuration AND edit the `alias` (your node's public name) and customize your node's color.
 
 ```
-# Thundroid LND Mainnet: lnd configuration
+# Thundroid: lnd configuration
 # /home/bitcoin/.lnd/lnd.conf
 
 [Application Options]
 debuglevel=debug
-debughtlc=true
 maxpendingchannels=5
 alias=YOUR_NODE_NAME  # EDIT!
 color=#000000         # EDIT!
@@ -211,32 +156,28 @@ bitcoin.mainnet=1
 * Exit *bitcoin* user session and go back to *admin* user.<br/>
   `exit` (or Ctrl+D)
 
+As *admin* user:
+
 * Create LND systemd unit.<br/>
   `sudo nano /etc/systemd/system/lnd.service`
 
 * Paste the following settings:
 
 ```
-# Thundroid LND Mainnet: systemd unit for lnd
+# Thundroid: systemd unit for lnd
 # /etc/systemd/system/lnd.service
 
 [Unit]
 Description=LND Lightning Daemon
-Requires=bitcoind.service
-After=getpublicip.service
+Wants=bitcoind.service
 After=bitcoind.service
 
-# for use with sendmail alert
-#OnFailure=systemd-sendmail@%n
-
 [Service]
-# get var PUBIP from file
-EnvironmentFile=/run/publicip
-
-ExecStart=/usr/local/bin/lnd --externalip=${PUBLICIP}
+ExecStart=/usr/local/bin/lnd
 PIDFile=/home/bitcoin/.lnd/lnd.pid
 User=bitcoin
 Group=bitcoin
+LimitNOFILE=128000
 Type=simple
 KillMode=process
 TimeoutSec=180
@@ -300,31 +241,6 @@ If you want *admin* user to be able to run `lncli` commands, you'll need to do t
 * Make sure that lncli works by unlocking your wallet and getting some node information.
   `lncli unlock`<br/>
   `sudo journalctl -f -u lnd`
-
-
-### Assign LND permissions to *root* (optional)
-If you want *root* user to be able to run `lncli` commands, you'll need to do the following:
-
-* Make sure permission files `admin.macaroon` and `readonly.macaroon` have been created.<br/>
-  `ls -la /home/bitcoin/.lnd/`
-
-* Create an LND directory for *admin* user.<br/>
-  `mkdir /home/admin/.lnd`
-
-* Copy permission files to *admin* user.<br/>
-  `sudo cp /home/bitcoin/.lnd/admin.macaroon /home/admin/.lnd`
-
-* Copy TLS cert to *admin* user.<br/>
-  `sudo cp /home/bitcoin/.lnd/tls.cert /home/admin/.lnd`
-
-* Make *admin* user the owner of the `/home/admin/.lnd/` directory and all files inside of it (`-R`).<br/>
-  `sudo chown -R admin:admin /home/admin/.lnd/`
-
-* Make sure that lncli works by unlocking your wallet and getting some node information.
-  `lncli unlock`<br/>
-  `sudo journalctl -f -u lnd`
-
-^^ TO DO
 
 
 # Using LND
@@ -597,7 +513,9 @@ lncli queryroutes 02f6725f9c1c40333b67faea92fd211c183050f28df32cac3f9d69685fe966
 * Note: always check the fee amounts, because some channels/nodes will charge you for going through them to pay someone else.
 
 
-# Updating LND
+# Update LND
+
+As *admin* user:
 
 * Check your LND's version.<br/>
   `lncli -v`
@@ -612,7 +530,7 @@ lncli queryroutes 02f6725f9c1c40333b67faea92fd211c183050f28df32cac3f9d69685fe966
   `git pull`
 
 * Build and then install LND.<br/>
-  `make && make install`
+  `make clean && make && make install`
 
 * Switch directories.<br/>
   `cd $GOPATH/bin`

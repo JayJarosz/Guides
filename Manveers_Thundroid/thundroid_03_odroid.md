@@ -454,3 +454,64 @@ Instead of turning off the blue LED, I would have preferred to reduce its bright
 ![Blue LED options](images/odroid-LED-blue.png)
 
 Further reading: [LED handling under Linux](https://github.com/hardkernel/linux/blob/odroid-3.8.y/Documentation/leds/leds-class.txt).
+
+
+### Public IP Script (ARCHIVE)
+In LND v0.4 (and earlier), we had to announce our public IP address to the Lightning network, which required us to first get it from a source outside of our network. 
+
+Below is a script that checks our device's IP every 10 minutes (600 seconds) and stores it locally.
+
+Note: this is no longer needed for LND v0.4.1 and above.
+
+As *admin* user:
+
+* Create script `getpublicip.sh`.<br/>
+  `sudo nano /usr/local/bin/getpublicip.sh`
+
+* Paste the following into `getpublicip.sh`:
+```
+#!/bin/bash
+# getpublicip.sh
+echo 'getpublicip.sh started, writing public IP address every 10 minutes into /run/publicip'
+while [ 0 ]; 
+    do 
+    printf "PUBLICIP=$(curl -vv ipinfo.io/ip 2> /run/publicip.log)\n" > /run/publicip;
+    sleep 600
+done;
+```
+
+* Save & close the file. (Ctrl+X)
+
+* Make the script executable.<br/>
+  `sudo chmod +x /usr/local/bin/getpublicip.sh`
+
+* Create the corresponding systemd unit.<br/>
+  `sudo nano /etc/systemd/system/getpublicip.service`
+
+```
+[Unit]
+Description=getpublicip.sh: get public ip address from ipinfo.io
+After=network.target
+
+[Service]
+User=root
+Group=root
+Type=simple
+ExecStart=/usr/local/bin/getpublicip.sh
+Restart=always
+RestartSec=600
+TimeoutSec=10
+
+[Install]
+WantedBy=multi-user.target
+```
+
+* Save & close the file. (Ctrl+X)
+
+* Enable systemd startup.<br/>
+  `sudo systemctl enable getpublicip`<br/>
+  `sudo systemctl start getpublicip`<br/>
+  `sudo systemctl status getpublicip`
+
+* Check if data file has been created (and view your public IP).<br/>
+  `cat /run/publicip`
